@@ -1,6 +1,7 @@
 package object;
 
 import MainPackage.GamePanel;
+import MainPackage.UtilityTool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,7 @@ public class SuperObject { //parent class of all objects.
     public  int solidAreaDefaultX = 0;
     public  int solidAreaDefaultY = 0;
     public  boolean used = false;
+    UtilityTool utilityTool = new UtilityTool();
 
 
 

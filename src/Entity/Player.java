@@ -2,6 +2,7 @@ package Entity;
 
 import MainPackage.GamePanel;
 import MainPackage.KeyHandler;
+import MainPackage.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,22 +11,23 @@ import java.io.IOException;
 
 public class Player extends Entity{
 
-    GamePanel gp;
     KeyHandler keyHandler;
 
     public final int screenX;
     public final int screenY;
-    public int hasKey = 0; // an integer that hold how many keys the player has
+    //public int hasKey = 0; // an integer that hold how many keys the player has
 
 
 
 
-    public Player(GamePanel gp, KeyHandler keyHandler){ // constructor for the player class. Takes a game panel and key handler object.
-        this.gp = gp;
+
+
+    public Player(GamePanel gamePanel, KeyHandler keyHandler){ // constructor for the player class. Takes a game panel and key handler object.
+        super(gamePanel);
         this.keyHandler = keyHandler;
 
-        screenX = gp.screenWidth/2 - (gp.tileSize/2);
-        screenY = gp.screenHeight/2 - (gp.tileSize/2);
+        screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize/2);
+        screenY = gamePanel.screenHeight/2 - (gamePanel.tileSize/2);
 
         solidArea = new Rectangle(8, 32 , 32, 16); // creates a rectangle on the character tile that is used for collision.
         solidAreaDefaultX = solidArea.x;
@@ -38,8 +40,8 @@ public class Player extends Entity{
 
     public void setDefaultValue(){ // the default values associated with the player.
         // the next two lines are the coordinates of the player's starting location
-        worldX = gp.tileSize * 10;
-        worldY = gp.tileSize * 38;
+        worldX = gamePanel.tileSize * 59;
+        worldY = gamePanel.tileSize * 31;
 
 //        QUICKLY FIND COORDS ON MAP
 //        worldX = gp.tileSize * 34;
@@ -50,21 +52,17 @@ public class Player extends Entity{
         direction = "down";
     }
     public void getPlayerImage(){ //retrieves the sprites for the player.
-        try{
-            up1 = ImageIO.read(getClass().getResourceAsStream("/res/Player/Up_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/res/Player/Up_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/res/Player/Down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/res/Player/Down_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/res/Player/Left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/res/Player/Left_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/res/Player/Right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/res/Player/Right_2.png"));
 
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        up1 = setUp("/res/Player/Up_1");
+        up2 = setUp("/res/Player/Up_2");
+        down1 = setUp("/res/Player/Down_1");
+        down2 = setUp("/res/Player/Down_2");
+        left1 = setUp("/res/Player/Left_1");
+        left2 = setUp("/res/Player/Left_2");
+        right1 = setUp("/res/Player/Right_1");
+        right2 = setUp("/res/Player/Right_2");
     }
+
     public void update() throws IOException { //updates in 60 fps to reflect changes on the game screen.
 
         if(keyHandler.upPressed == true || keyHandler.downPressed == true || keyHandler.leftPressed == true || keyHandler.rightPressed == true){
@@ -90,11 +88,15 @@ public class Player extends Entity{
             }
             // the following lines are responsible for checking for the player's tile collision.
             collisionOn = false;
-            gp.collisionChecker.checkTile(this); // calls the collision checker passing the player as the entity to be checked.
+            gamePanel.collisionChecker.checkTile(this); // calls the collision checker passing the player as the entity to be checked.
 
             // the following lines are responsible for checking for the player's object collision.
-            int objIndex = gp.collisionChecker.checkObject(this, true);
+            int objIndex = gamePanel.collisionChecker.checkObject(this, true);
             pickUpObject(objIndex);
+
+            //CHECK NPC COLLISION
+            int npcIndex = gamePanel.collisionChecker.checkEntity(this, gamePanel.npc);
+            interactNPC(npcIndex);
 
             if(collisionOn == false){ // the player can only move if collisionOn is false, meaning the tiles are not solid.
 
@@ -131,74 +133,17 @@ public class Player extends Entity{
 
     }
     public void pickUpObject(int index) throws IOException {
+        if(index != 999){}
+    }
+
+    public void interactNPC(int index){
         if(index != 999){
-            String objectName = gp.obj[index].name;
-
-            switch(objectName){
-                //case for interacting with a key item.
-                //the hasKey integer will increment
-                //the key object will become null (disappear)
-                case "Key":
-                    gp.playSoundEffect(1);
-                    hasKey++;
-                    gp.obj[index] = null;
-                    gp.ui.showMessage("You found a key!");
-                    break;
-
-
-                //case for interacting with a horizontal door.
-                //if the player has a key the door will open, its sprite will change, its collision will become false...
-                // ... hasKey will decrement, and the used will become true to insure that it can only be opened once.
-                case "Door":
-                    if(hasKey > 0){
-                        if(gp.obj[index].used == false){
-                            gp.playSoundEffect(4);
-                            gp.obj[index].image = ImageIO.read(getClass().getResourceAsStream("/res/Objects/Door_2.png"));
-                            gp.obj[index].collision = false;
-                            hasKey--;
-                            gp.obj[index].used = true;
-                            gp.ui.showMessage("The door has been opened!");
-                        }
-                    } else if (gp.obj[index].used == false){
-                        gp.ui.showMessage("This door is locked!");
-                    }
-                    break;
-
-
-                //case for interacting with a vertical door.
-                //if the player has a key the door will open, its sprite will change, its collision will become false...
-                // ... hasKey will decrement, and the used will become true to ensure that it can only be opened once.
-                case "VertDoor":
-                    if(hasKey > 0){
-                        if(gp.obj[index].used == false){
-                            gp.playSoundEffect(4);
-                            gp.obj[index].image = ImageIO.read(getClass().getResourceAsStream("/res/Objects/Door_3.png"));
-                            gp.obj[index].collision = false;
-                            hasKey--;
-                            gp.obj[index].used = true;
-                            gp.ui.showMessage("The door has been opened!");
-                        }
-                    } else if (gp.obj[index].used == false){
-                        gp.ui.showMessage("This door is locked!");
-                    }
-                    break;
-
-                   //this case deals with the "Shoes" item.
-                case "Shoes":
-                    gp.playSoundEffect(3);
-                    speed += 4;
-                    gp.obj[index] = null;
-                    gp.ui.showMessage("Speed up!");
-                    break;
-
-                //case for getting to the chest and ending the game.
-                case "Chest":
-                    gp.ui.gameFinished = true;
-                    gp.stopMusic();
-                    gp.playSoundEffect(2);
-                    break;
+            if(gamePanel.keyHandler.enterPressed == true){
+                gamePanel.gameState = gamePanel.dialogueState;
+                gamePanel.npc[index].speak();
             }
         }
+        gamePanel.keyHandler.enterPressed = false;
     }
 
     public void draw(Graphics2D g2){
@@ -239,7 +184,7 @@ public class Player extends Entity{
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null); //this line is responsible for actually drawing the player image.
+        g2.drawImage(image, screenX, screenY,null); //this line is responsible for actually drawing the player image.
 
     }
 

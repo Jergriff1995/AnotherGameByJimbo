@@ -15,6 +15,7 @@ public class Sound {
         soundURL[2] = getClass().getResource("/res/Sound/FanfareTrimmed.wav");
         soundURL[3] = getClass().getResource("/res/Sound/PowerUpTrimmed.wav");
         soundURL[4] = getClass().getResource("/res/Sound/UnlockTrimmed.wav");
+        soundURL[5] = getClass().getResource("/res/Sound/TitleTrimmed.wav");
     }
 
     public void setFile(int i){

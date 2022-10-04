@@ -1,5 +1,6 @@
 package MainPackage;
 
+import Entity.Entity;
 import Entity.Player;
 import Tiles.TileManager;
 import object.SuperObject;
@@ -21,26 +22,32 @@ public class GamePanel extends JPanel implements Runnable{
     public final int screenWidth = tileSize * maxScreenCol; // sets the appropriate width of the screen. 768 pixels
     public final int screenHeight = tileSize * maxScreenRow; // sets the appropriate height of the screen. 576 pixels
 
-    public final int maxWorldCol = 58;
-    public final int maxWorldRow = 60;
-
-
+    //WORLD SIZE
+    public final int maxWorldCol = 100;
+    public final int maxWorldRow = 100;
 
     public final int fps = 60; // the number of frames per second the game will run at.
 
     TileManager tileManager = new TileManager(this);
-    KeyHandler keyHandler = new KeyHandler(); // instantiates the key handler.
+    public KeyHandler keyHandler = new KeyHandler(this); // instantiates the key handler.
     Sound sound = new Sound();
     Sound music = new Sound();
     public CollisionChecker collisionChecker = new CollisionChecker(this); // creates the collision checker object.
     public AssetSetter assetSetter = new AssetSetter(this); // creates the asset setter used to display objects.
     public UI ui = new UI(this); //creates the UI class object
     Thread gameThread; // a thread will keep processing the game continuously.
+
+    //ENTITY AND OBJECT
     public Player player = new Player(this, keyHandler); // instantiates the player object.
     public SuperObject obj[] = new SuperObject[10]; //the number of objects the game can display.
+    public Entity npc[] = new Entity[10];
 
-
-
+    //GAME STATE
+    public int gameState;
+    public final int titleState = 0;
+    public final int playState = 1;
+    public final int pauseState = 2;
+    public final int dialogueState = 3;
 
 
     public GamePanel(){ //the constructor for the game's screen.
@@ -53,7 +60,9 @@ public class GamePanel extends JPanel implements Runnable{
     }
     public void setupGame(){
       assetSetter.setObject();
+      assetSetter.setNPC();
       playMusic(0);
+      gameState = titleState;
     }
 
     public void startGameThread(){
@@ -94,24 +103,67 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() throws IOException {
-        player.update(); // calls the player class update method.
+
+        if(gameState == playState){
+            player.update(); // calls the player class update method.
+            for(int i = 0; i < npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].update();
+                }
+            }
+        }
+        if(gameState == pauseState){
+           //working on it...
+        }
+
     }
 
     public void paintComponent(Graphics g){ // how objects are drawn in the game. paintComponent is a method built into Java.
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g; //Graphics2D extends Graphics and provides more sophisticated control.
-        tileManager.draw(g2);
 
-        for(int i = 0; i < obj.length; i++){
-            if(obj[i] != null){
-                obj[i].draw(g2, this);
-            }
+        //DEBUG
+        long drawStart = 0;
+        if(keyHandler.checkDrawTime == true){
+            drawStart = System.nanoTime();
         }
 
-        //Testing player character
-        player.draw(g2); // calls the player class draw method.
+        //TITLE SCREEN
+        if(gameState == titleState){
+            ui.draw(g2);
+        } else {
 
-        ui.Draw(g2);
+            //TILES
+            tileManager.draw(g2);
+
+            //OBJECTS
+            for(int i = 0; i < obj.length; i++){
+                if(obj[i] != null){
+                    obj[i].draw(g2, this);
+                }
+            }
+            //NPC
+            for(int i = 0; i < obj.length; i++){
+                if(npc[i] != null){
+                    npc[i].draw(g2);
+                }
+            }
+
+            //PLAYER
+            player.draw(g2); // calls the player class draw method.
+            //User Interface
+            ui.draw(g2);
+
+
+            //DEBUG
+            if(keyHandler.checkDrawTime == true){
+                long drawEnd = System.nanoTime();
+                long past = drawEnd - drawStart;
+                g2.setColor(Color.cyan);
+                g2.drawString("Draw time = " + past, 10, 400);
+                System.out.println(past);
+            }
+        }
         g2.dispose(); // a good practice to save memory.
     }
     public void playMusic(int i){
