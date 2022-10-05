@@ -1,6 +1,8 @@
 package MainPackage;
 
+import object.Obj_Heart;
 import object.Obj_Key;
+import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,7 +16,9 @@ public class UI  {
     Font maruMonica;
     Font knightsQuest;
     Font knightsQuest2;
- //   BufferedImage keyImage;
+    BufferedImage heartFull;
+    BufferedImage heartHalf;
+    BufferedImage heartEmpty;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
@@ -42,6 +46,11 @@ public class UI  {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //Create HUD Object
+        SuperObject heart = new Obj_Heart(gp);
+        heartFull = heart.image;
+        heartHalf = heart.image2;
+        heartEmpty = heart.image3;
 
     }
 
@@ -55,16 +64,48 @@ public class UI  {
         }
         //Play State
         if(gp.gameState == gp.playState){
+            drawPlayerLife();
 
         }
         //Pause State
         if(gp.gameState == gp.pauseState){
+            drawPlayerLife();
             drawPauseScreen();
         }
         //Dialogue State
         if(gp.gameState == gp.dialogueState){
+            drawPlayerLife();
             drawDialogueScreen();
         }
+    }
+
+    public void drawPlayerLife(){
+
+
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+        int i = 0;
+        //Draw Blank Hearts
+        while(i < gp.player.maxLife/2){
+            g2.drawImage(heartEmpty, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+        //Reset Values
+         x = gp.tileSize/2;
+         y = gp.tileSize/2;
+         i = 0;
+         //Draw Current Health
+        while(i < gp.player.life){
+            g2.drawImage(heartHalf, x, y, null);
+            i++;
+            if(i < gp.player.life){
+                g2.drawImage(heartFull, x, y, null);
+            }
+            i++;
+            x += gp.tileSize;
+        }
+
     }
 
     public void showMessage(String text){
@@ -158,7 +199,7 @@ public class UI  {
      g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 27F));
      x += gp.tileSize;
      y += gp.tileSize;
-     for(String line : currentDialogue.split("\n")){
+     for(String line : currentDialogue.split("##")){
         g2.drawString(line, x, y);
         y += 40;
      }

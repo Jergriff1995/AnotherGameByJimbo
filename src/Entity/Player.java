@@ -29,7 +29,7 @@ public class Player extends Entity{
         screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize/2);
         screenY = gamePanel.screenHeight/2 - (gamePanel.tileSize/2);
 
-        solidArea = new Rectangle(8, 32 , 32, 16); // creates a rectangle on the character tile that is used for collision.
+        solidArea = new Rectangle(11, 10, 26, 28); // creates a rectangle on the character tile that is used for collision.
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
@@ -50,6 +50,10 @@ public class Player extends Entity{
 
         speed = 4; // how fast the player moves
         direction = "down";
+
+        //Player Status
+        maxLife = 6;
+        life = maxLife;
     }
     public void getPlayerImage(){ //retrieves the sprites for the player.
 
@@ -98,6 +102,10 @@ public class Player extends Entity{
             int npcIndex = gamePanel.collisionChecker.checkEntity(this, gamePanel.npc);
             interactNPC(npcIndex);
 
+            //CHECK EVENT
+            gamePanel.eventHandler.checkEvent();
+            gamePanel.keyHandler.enterPressed = false;
+
             if(collisionOn == false){ // the player can only move if collisionOn is false, meaning the tiles are not solid.
 
                 switch (direction){
@@ -143,7 +151,7 @@ public class Player extends Entity{
                 gamePanel.npc[index].speak();
             }
         }
-        gamePanel.keyHandler.enterPressed = false;
+
     }
 
     public void draw(Graphics2D g2){

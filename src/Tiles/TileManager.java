@@ -122,6 +122,12 @@ public class TileManager { // manager class for tiles on the game screen.
         setUp(61, "Z1", false);
         setUp(62, "Z2", false);
         setUp(63, "Z3", false);
+        setUp(64, "ZHole", false);
+        setUp(65, "ZWell", true);
+        setUp(66, "ZWellBL", true);
+        setUp(67, "ZWellBR", true);
+        setUp(68, "ZWellTL", true);
+        setUp(69, "ZWellTR", true);
 
 
 

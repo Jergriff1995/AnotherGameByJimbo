@@ -40,6 +40,10 @@ public class Entity {
     public int actionLookCounter;
     GamePanel gamePanel;
 
+    //Character Status
+    public int maxLife;
+    public int life;
+
     public Entity(GamePanel gamePanel){
         this.gamePanel = gamePanel;
     }

@@ -35,6 +35,7 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker collisionChecker = new CollisionChecker(this); // creates the collision checker object.
     public AssetSetter assetSetter = new AssetSetter(this); // creates the asset setter used to display objects.
     public UI ui = new UI(this); //creates the UI class object
+    public EventHandler eventHandler = new EventHandler(this);
     Thread gameThread; // a thread will keep processing the game continuously.
 
     //ENTITY AND OBJECT
