@@ -4,6 +4,8 @@ import MainPackage.GamePanel;
 
 public class Bean extends Entity{
 
+    //UNFINISHED
+
     public Bean(GamePanel gamePanel) {
         super(gamePanel);
         getImage();
@@ -11,7 +13,7 @@ public class Bean extends Entity{
 
     public void getImage(){ //retrieves the sprites for the NPC.
 
-        down1 = setUp("/res/NPC/Bean");
+        down1 = setUp("/res/NPC/Bean", gamePanel.tileSize, gamePanel.tileSize);
 
     }
 }

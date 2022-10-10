@@ -29,7 +29,7 @@ public class TileManager { // manager class for tiles on the game screen.
 
     public void loadMap(){ //converts our text file into java.
         try{
-            InputStream is = getClass().getResourceAsStream("/res/Maps/Map4.txt");
+            InputStream is = getClass().getResourceAsStream("/res/Maps/Sheoah3.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;
@@ -122,12 +122,40 @@ public class TileManager { // manager class for tiles on the game screen.
         setUp(61, "Z1", false);
         setUp(62, "Z2", false);
         setUp(63, "Z3", false);
-        setUp(64, "ZHole", false);
-        setUp(65, "ZWell", true);
-        setUp(66, "ZWellBL", true);
-        setUp(67, "ZWellBR", true);
-        setUp(68, "ZWellTL", true);
-        setUp(69, "ZWellTR", true);
+        setUp(64, "ZBeach10", false);
+        setUp(65, "ZBeach11", false);
+        setUp(66, "ZBeach12", false);
+        setUp(67, "ZBeach13", false);
+        setUp(68, "ZGSC6", false);
+        setUp(69, "ZGSC7", false);
+        setUp(70, "ZGSC8", false);
+        setUp(71, "ZGSC9", false);
+        setUp(72, "ZHole", false);
+        setUp(73, "ZWell", true);
+        setUp(74, "ZWellBL", true);
+        setUp(75, "ZWellBR", true);
+        setUp(76, "ZWellTL", true);
+        setUp(77, "ZWellTR", true);
+        setUp(78, "ZZHouse1", true);
+        setUp(79, "ZZHouse10", true);
+        setUp(80, "ZZHouse11", true);
+        setUp(81, "ZZHouse12", true);
+        setUp(82, "ZZHouse2", true);
+        setUp(83, "ZZHouse3", true);
+        setUp(84, "ZZHouse4", true);
+        setUp(85, "ZZHouse5", true);
+        setUp(86, "ZZHouse6", true);
+        setUp(87, "ZZHouse7", true);
+        setUp(88, "ZZHouse8", true);
+        setUp(89, "ZZHouse9", true);
+        setUp(90, "ZZTree", true);
+        setUp(91, "ZZTree2", true);
+        setUp(92, "ZZZPath", false);
+        setUp(93, "ZZZPath2", false);
+        setUp(94, "ZZZPath3", false);
+        setUp(95, "ZZZPath4", false);
+
+
 
 
 

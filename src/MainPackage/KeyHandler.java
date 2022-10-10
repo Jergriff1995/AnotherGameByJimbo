@@ -30,21 +30,42 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
         int code = e.getKeyCode(); // returns the integer key code associated with the pressed key.
         //TITLE STATE
         if(gp.gameState == gp.titleState){
-            if(code == KeyEvent.VK_W){ // if the player has pressed the "W" key.
-                gp.playSoundEffect(1);
-               gp.ui.commandNum--;
-               if(gp.ui.commandNum < 0){
-                   gp.ui.commandNum = 2;
-               }
+            titleState(code);
             }
-            if(code == KeyEvent.VK_S){ // if the player has pressed the "S" key.
-                gp.playSoundEffect(1);
+        //PLAY STATE
+        else if(gp.gameState == gp.playState){
+          playState(code);
+        }
+        //PAUSE STATE
+        else if(gp.gameState == gp.pauseState){
+            pauseState(code);
+        }
+        //DIALOGUE STATE
+        else if (gp.gameState == gp.dialogueState){
+           dialogueState(code);
+        }
+        //CHARACTER STATE
+        else if (gp.gameState == gp.characterState){
+            characterState(code);
+        }
+    }
+            //NOTE: never turn column selection mode on in IntelliJ...
+    public void titleState(int code){
+        if(code == KeyEvent.VK_W){ // if the player has pressed the "W" key.
+                gp.playSoundEffect(7);
+                gp.ui.commandNum--;
+                if(gp.ui.commandNum < 0){
+                    gp.ui.commandNum = 2;
+                }
+            }
+        if(code == KeyEvent.VK_S){ // if the player has pressed the "S" key.
+                gp.playSoundEffect(7);
                 gp.ui.commandNum++;
                 if(gp.ui.commandNum > 2){
                     gp.ui.commandNum = 0;
                 }
             }
-            if(code == KeyEvent.VK_ENTER){
+        if(code == KeyEvent.VK_ENTER){
                 if(gp.ui.commandNum == 0){
                     gp.gameState = gp.playState;
                     gp.stopMusic();
@@ -55,31 +76,34 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
                     //add later
                 }
                 if(gp.ui.commandNum == 2){
-                  System.exit(0);
+                    System.exit(0);
                 }
 
 
             }
-        }
-        //PLAY STATE
-        if(gp.gameState == gp.playState){
-            if(code == KeyEvent.VK_W){ // if the player has pressed the "W" key.
+    }
+    public void playState(int code){
+
+        if(code == KeyEvent.VK_W){ // if the player has pressed the "W" key.
                 upPressed = true;
             }
-            if(code == KeyEvent.VK_A){ // if the player has pressed the "A" key.
+        if(code == KeyEvent.VK_A){ // if the player has pressed the "A" key.
                 leftPressed = true;
             }
-            if(code == KeyEvent.VK_S){ // if the player has pressed the "S" key.
+        if(code == KeyEvent.VK_S){ // if the player has pressed the "S" key.
                 downPressed = true;
             }
-            if(code == KeyEvent.VK_D){  // if the player has pressed the "D" key.
+        if(code == KeyEvent.VK_D){  // if the player has pressed the "D" key.
                 rightPressed = true;
             }
-            if(code == KeyEvent.VK_P){  // if the player has pressed the "P" key.
+        if(code == KeyEvent.VK_P){  // if the player has pressed the "P" key.
                 gp.gameState = gp.pauseState;
             }
-            if(code == KeyEvent.VK_ENTER){  // if the player has pressed the "P" key.
+        if(code == KeyEvent.VK_ENTER){  // if the player has pressed the "P" key.
                 enterPressed = true;
+            }
+        if(code == KeyEvent.VK_C){  // if the player has pressed the "P" key.
+                gp.gameState = gp.characterState;
             }
 
             //DEBUG
@@ -90,23 +114,28 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
                     checkDrawTime = false;
                 }
             }
-        }
-        //PAUSE STATE
-        else if(gp.gameState == gp.pauseState){
-            if(code == KeyEvent.VK_P){
-                gp.gameState = gp.playState;
-            }
-        }
+    }
 
-        //DIALOGUE STATE
-        else if (gp.gameState == gp.dialogueState){
-            if(code == KeyEvent.VK_ENTER){
-                gp.gameState = gp.playState;
-            }
+    public void pauseState(int code){
+        if(code == KeyEvent.VK_P){
+            gp.gameState = gp.playState;
+
         }
 
     }
-            //NOTE: never turn column selection mode on in IntelliJ...
+    public void dialogueState(int code){
+        if(code == KeyEvent.VK_ENTER){
+                gp.gameState = gp.playState;
+        }
+
+    }
+    public void characterState(int code){
+
+        if(code == KeyEvent.VK_C){
+            gp.gameState = gp.playState;
+        }
+
+    }
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode(); // returns the integer key code associated with the pressed key.

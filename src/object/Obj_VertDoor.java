@@ -1,26 +1,19 @@
 package object;
 
+import Entity.Entity;
 import MainPackage.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Obj_VertDoor extends SuperObject{
+public class Obj_VertDoor extends Entity {
 
-    GamePanel gp;
+
 
     public Obj_VertDoor(GamePanel gp){
-        this.gp = gp;
-
+        super(gp);
         name = "VertDoor";
-
-        try{
-            image = ImageIO.read(getClass().getResourceAsStream("/res/Objects/Door_4.png"));
-            utilityTool.scaleImage(image, gp.tileSize, gp.tileSize);
-
-        } catch(IOException e){
-            e.printStackTrace();
-        }
+        down1 = setUp("/res/Objects/Door_4", gp.tileSize, gp.tileSize);
         collision = true;
     }
 }

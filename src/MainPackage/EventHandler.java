@@ -43,11 +43,12 @@ public class EventHandler {
             canTouchEvent = true;
         }
         if(canTouchEvent == true){
-            if(hit(52, 31, "any") == true){damagePit(52, 31, gp.dialogueState);}
-            if(hit(62, 37, "right") == true){healingPool(gp.dialogueState);}
-            if(hit(63, 38, "up") == true){healingPool(gp.dialogueState);}
-            if(hit(64, 38, "up") == true){healingPool(gp.dialogueState);}
-            if(hit(65, 37, "left") == true){healingPool(gp.dialogueState);}
+            if(hit(21, 16, "any") == true){healingPool(gp.dialogueState);}
+            if(hit(22, 16, "any") == true){healingPool(gp.dialogueState);}
+            if(hit(20, 18, "right") == true){healingPool(gp.dialogueState);}
+            if(hit(21, 19, "up") == true){healingPool(gp.dialogueState);}
+            if(hit(22, 19, "up") == true){healingPool(gp.dialogueState);}
+            if(hit(23, 18, "left") == true){healingPool(gp.dialogueState);}
         }
 
 
@@ -75,6 +76,7 @@ public class EventHandler {
     }
     public void damagePit(int col, int row, int gameState){
         gp.gameState = gameState;
+        gp.playSoundEffect(11);
         gp.ui.currentDialogue = "You fell into a pit! ##Ouch!";
         gp.player.life -= 1;
         canTouchEvent = false;
@@ -83,6 +85,8 @@ public class EventHandler {
 
     public void healingPool(int gameState){
         if(gp.keyHandler.enterPressed == true){
+            gp.playSoundEffect(3);
+            gp.player.attackCancelled = true;
             gp.gameState = gameState;
             gp.ui.currentDialogue = "You drink some water. ##You are feeling better!";
             gp.player.life = gp.player.maxLife;

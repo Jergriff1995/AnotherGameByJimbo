@@ -13,8 +13,7 @@ import java.io.IOException;
 public class Entity {
     public int worldX;
     public int worldY;
-    public int speed;
-
+    //WALKING
     public BufferedImage up1;
     public BufferedImage up2;
     public BufferedImage down1;
@@ -24,13 +23,41 @@ public class Entity {
     public BufferedImage right1;
     public BufferedImage right2;
 
+    //ATTACKING
+    public BufferedImage attackUp1;
+    public BufferedImage attackUp2;
+    public BufferedImage attackDown1;
+    public BufferedImage attackDown2;
+    public BufferedImage attackLeft1;
+    public BufferedImage attackLeft2;
+    public BufferedImage attackRight1;
+    public BufferedImage attackRight2;
+
+
+    //EXTRA
+    public BufferedImage image;
+    public BufferedImage image2;
+    public BufferedImage image3;
+
+    public String name;
+    public Boolean invincible = false;
+    public int invincibleCounter;
+    public boolean collision = false;
+    boolean attacking = false;
+    public boolean alive = true;
+    public boolean dying = false;
+    int dyingCounter;
+    boolean hpBarOn = false;
+    int hpBarCounter;
     public String dialogues[] = new String[20];
     int dialogueIndex = 0;
 
-    public String direction;
+    public String direction = "down";
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
+
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
 
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48); //represents what area of an entity will be considered solid for collision detection.
     public int solidAreaDefaultX;
@@ -39,10 +66,26 @@ public class Entity {
     public boolean collisionOn = false;
     public int actionLookCounter;
     GamePanel gamePanel;
+    public int type; // 0 = player, 1 = npc, 2 = monster.
 
     //Character Status
     public int maxLife;
     public int life;
+    public int level;
+    public int strength;
+    public int dexterity;
+    public int attack;
+    public int defense;
+    public int exp;
+    public int nextLvlExp;
+    public int coin;
+    public int speed;
+    public Entity currentWeapon;
+    public Entity currentShield;
+
+    //Item Attributes
+    public int attackValue;
+    public int defenseValue;
 
     public Entity(GamePanel gamePanel){
         this.gamePanel = gamePanel;
@@ -95,16 +138,81 @@ public class Entity {
                     break;
             }
 
+            //MONSTER HP BAR
+            if(type == 2 && hpBarOn == true){
+                double oneScale = (double)gamePanel.tileSize/maxLife;
+                double hpBarValue = oneScale*life;
+                g2.setColor(new Color(35 ,35 ,35));
+                g2.fillRect(screenX -1 , screenY - 16, gamePanel.tileSize +2, 12);
+                g2.setColor(new Color(208, 6, 30));
+                g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 10);
+
+                hpBarCounter++;
+                if(hpBarCounter > 600){
+                    hpBarCounter = 0;
+                    hpBarOn = false;
+                }
+
+            }
+
+
+            if(invincible == true){
+                hpBarOn = true;
+                hpBarCounter = 0;
+                changeAlpha(g2, 0.4F);
+            }
+            if(dying == true){
+                dyingAnimation(g2);
+            }
+
             g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+            changeAlpha(g2, 1.0F);
         }
 
     }
-    public BufferedImage setUp(String imageName){
+    public void dyingAnimation(Graphics2D g2){
+
+        int interval= 5;
+
+        dyingCounter++;
+        if(dyingCounter <= interval){
+            changeAlpha(g2, 0.8F);
+        }
+        if(dyingCounter > interval*2  && dyingCounter <= interval*3){
+            changeAlpha(g2, 0.0F);
+        }
+        if(dyingCounter > interval*3  && dyingCounter <= interval*4){
+            changeAlpha(g2, 0.8F);
+        }
+        if(dyingCounter > interval*4 && dyingCounter <= interval*5){
+            changeAlpha(g2, 0.8F);
+        }
+        if(dyingCounter > interval*5  && dyingCounter <= interval*6){
+            changeAlpha(g2, 0.0F);
+        }
+        if(dyingCounter > interval*6  && dyingCounter <= interval*7){
+            changeAlpha(g2, 0.8F);
+        }
+        if(dyingCounter > interval*7  && dyingCounter <= interval*8){
+            changeAlpha(g2, 0.0F);
+        }
+        if(dyingCounter > interval*8  && dyingCounter <= interval*9){
+            changeAlpha(g2, 0.8F);
+        }
+        if(dyingCounter > interval * 9){
+            dying = false;
+            alive = false;
+        }
+    }
+    public void changeAlpha(Graphics2D g2, float alphaValue){
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
+    }
+    public BufferedImage setUp(String imageName, int width, int height){
         UtilityTool utilityTool = new UtilityTool();
         BufferedImage scaledImage = null;
         try {
             scaledImage = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
-            scaledImage = utilityTool.scaleImage(scaledImage, gamePanel.tileSize, gamePanel.tileSize);
+            scaledImage = utilityTool.scaleImage(scaledImage, width, height);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -117,13 +225,29 @@ public class Entity {
 
     }
 
+    public void damageReaction(){
+
+    }
+
     public void update() throws IOException {
         setAction();
 
         collisionOn = false;
         gamePanel.collisionChecker.checkTile(this);
         gamePanel.collisionChecker.checkObject(this, false);
-        gamePanel.collisionChecker.checkPlayer(this);
+        gamePanel.collisionChecker.checkEntity(this, gamePanel.npc);
+        gamePanel.collisionChecker.checkEntity(this, gamePanel.monster);
+        boolean contactPlayer = gamePanel.collisionChecker.checkPlayer(this);
+
+
+        if(this.type ==2 && contactPlayer == true){
+            if(gamePanel.player.invincible == false){
+                gamePanel.playSoundEffect(8);
+                gamePanel.player.life -= 1;
+                gamePanel.player.invincible = true;
+
+            }
+        }
 
 
         if(collisionOn == false){ // the NPC can only move if collisionOn is false, meaning the tiles are not solid.
@@ -155,6 +279,13 @@ public class Entity {
                 spriteNum = 1;
             }
             spriteCounter = 0;
+        }
+        if(invincible == true){
+            invincibleCounter++;
+            if(invincibleCounter > 40){
+                invincible = false;
+                invincibleCounter = 0;
+            }
         }
     }
 

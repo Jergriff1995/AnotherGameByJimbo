@@ -1,27 +1,18 @@
 package object;
 
+import Entity.Entity;
 import MainPackage.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Obj_Key extends  SuperObject{ //represents the "Key" object
-    GamePanel gp;
+public class Obj_Key extends Entity { //represents the "Key" object
+
 
     public Obj_Key(GamePanel gp){
-        this.gp = gp;
-
-
-
+        super(gp);
         name = "Key";
-
-        try{
-            image = ImageIO.read(getClass().getResourceAsStream("/res/Objects/Key_1.png"));
-            utilityTool.scaleImage(image, gp.tileSize, gp.tileSize);
-
-        } catch(IOException e){
-            e.printStackTrace();
-        }
+        down1 = setUp("/res/Objects/Key_1", gp.tileSize, gp.tileSize);
         collision = true;
     }
 }

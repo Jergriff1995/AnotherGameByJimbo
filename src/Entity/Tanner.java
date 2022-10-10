@@ -17,14 +17,14 @@ public class Tanner extends Entity{
     }
     public void getImage(){ //retrieves the sprites for the NPC.
 
-        up1 = setUp("/res/NPC/TanU1");
-        up2 = setUp("/res/NPC/TanU2");
-        down1 = setUp("/res/NPC/TanD1");
-        down2 = setUp("/res/NPC/TanD2");
-        left1 = setUp("/res/NPC/TanL1");
-        left2 = setUp("/res/NPC/TanL2");
-        right1 = setUp("/res/NPC/TanR1");
-        right2 = setUp("/res/NPC/TanR2");
+        up1 = setUp("/res/NPC/TanU1", gamePanel.tileSize, gamePanel.tileSize);
+        up2 = setUp("/res/NPC/TanU2", gamePanel.tileSize, gamePanel.tileSize);
+        down1 = setUp("/res/NPC/TanD1", gamePanel.tileSize, gamePanel.tileSize);
+        down2 = setUp("/res/NPC/TanD2", gamePanel.tileSize, gamePanel.tileSize);
+        left1 = setUp("/res/NPC/TanL1", gamePanel.tileSize, gamePanel.tileSize);
+        left2 = setUp("/res/NPC/TanL2", gamePanel.tileSize, gamePanel.tileSize);
+        right1 = setUp("/res/NPC/TanR1", gamePanel.tileSize, gamePanel.tileSize);
+        right2 = setUp("/res/NPC/TanR2", gamePanel.tileSize, gamePanel.tileSize);
     }
 
     public void setDialogue(){

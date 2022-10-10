@@ -1,8 +1,9 @@
 package MainPackage;
 
-import Entity.Bean;
-import Entity.NPC_One;
+import Entity.Johnny;
 import Entity.Tanner;
+import Monster.MON_Beast;
+import Monster.MON_Slime;
 import object.*;
 
 public class AssetSetter { // this class is responsible for displaying objects in the game.
@@ -14,29 +15,38 @@ public class AssetSetter { // this class is responsible for displaying objects i
     }
 
     public void setObject(){ // this method creates objects and places them on the map.
-//        gp.obj[0] = new Obj_Door(gp);
-//        gp.obj[0].worldX = gp.tileSize*58;
-//        gp.obj[0].worldY = gp.tileSize*33;
-//
-//        gp.obj[1] = new Obj_Key(gp);
-//        gp.obj[1].worldX = gp.tileSize*61;
-//        gp.obj[1].worldY = gp.tileSize*30;
+
 
     }
 
     public void setNPC(){
 
-        gp.npc[0] = new NPC_One(gp);
-        gp.npc[0].worldX = gp.tileSize*60;
-        gp.npc[0].worldY = gp.tileSize*50;
+        gp.npc[0] = new Tanner(gp);
+        gp.npc[0].worldX = gp.tileSize*58;
+        gp.npc[0].worldY = gp.tileSize*55;
 
-        gp.npc[1] = new Tanner(gp);
-        gp.npc[1].worldX = gp.tileSize*58;
+
+        gp.npc[1] = new Johnny(gp);
+        gp.npc[1].worldX = gp.tileSize*59;
         gp.npc[1].worldY = gp.tileSize*55;
 
-        gp.npc[2] = new NPC_One(gp);
-        gp.npc[2].worldX = gp.tileSize*62;
-        gp.npc[2].worldY = gp.tileSize*55;
+    }
 
+    public void setMonster(){
+        gp.monster[0] = new MON_Slime(gp);
+        gp.monster[0].worldX = gp.tileSize*65;
+        gp.monster[0].worldY = gp.tileSize*32;
+
+        gp.monster[1] = new MON_Beast(gp);
+        gp.monster[1].worldX = gp.tileSize*53;
+        gp.monster[1].worldY = gp.tileSize*35;
+
+        gp.monster[2] = new MON_Slime(gp);
+        gp.monster[2].worldX = gp.tileSize*52;
+        gp.monster[2].worldY = gp.tileSize*44;
+
+        gp.monster[3] = new MON_Slime(gp);
+        gp.monster[3].worldX = gp.tileSize*63;
+        gp.monster[3].worldY = gp.tileSize*51;
     }
 }

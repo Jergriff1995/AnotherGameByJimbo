@@ -10,12 +10,18 @@ public class Sound {
     URL soundURL[] = new URL[30];
 
     public Sound(){
-        soundURL[0] = getClass().getResource("/res/Sound/OverworldTrimmed.wav");
+        soundURL[0] = getClass().getResource("/res/Sound/BeansLullaby.wav");
         soundURL[1] = getClass().getResource("/res/Sound/CoinTrimmed.wav");
         soundURL[2] = getClass().getResource("/res/Sound/FanfareTrimmed.wav");
         soundURL[3] = getClass().getResource("/res/Sound/PowerUpTrimmed.wav");
         soundURL[4] = getClass().getResource("/res/Sound/UnlockTrimmed.wav");
         soundURL[5] = getClass().getResource("/res/Sound/TitleTrimmed.wav");
+        soundURL[6] = getClass().getResource("/res/Sound/OverworldTrimmed2.wav");
+        soundURL[7] = getClass().getResource("/res/Sound/MenuChime.wav");
+        soundURL[8] = getClass().getResource("/res/Sound/SlimeA.wav");
+        soundURL[9] = getClass().getResource("/res/Sound/PlayerA.wav");
+        soundURL[10] = getClass().getResource("/res/Sound/MonsterHit.wav");
+        soundURL[11] = getClass().getResource("/res/Sound/Fall.wav");
     }
 
     public void setFile(int i){
