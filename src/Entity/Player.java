@@ -268,9 +268,14 @@ public class Player extends Entity{
 
     public void contactMonster(int index){
         if(index != 999){
-            if(invincible == false){
+            if(invincible == false && gamePanel.monster[index].dying == false){
                 gamePanel.playSoundEffect(8);
-                life -= 1;
+                //Damage Calculation Player to Monster
+                int damage = gamePanel.monster[index].attack - defense;
+                if(damage < 0 ){
+                    damage = 0;
+                }
+                life -= damage;
                 invincible = true;
             }
 
@@ -281,12 +286,22 @@ public class Player extends Entity{
         if(index != 999){
             if(gamePanel.monster[index].invincible == false){
                 gamePanel.playSoundEffect(10);
-                gamePanel.monster[index].life -= 1;
+
+                //Damage Calculation Player to Monster
+                int damage = attack - gamePanel.monster[index].defense;
+                if(damage < 0 ){
+                    damage = 0;
+                }
+                gamePanel.monster[index].life -= damage;
+                gamePanel.ui.addMessage(damage + " damage!");
                 gamePanel.monster[index].invincible = true;
                 gamePanel.monster[index].damageReaction();
 
                 if(gamePanel.monster[index].life <= 0){
                     gamePanel.monster[index].dying = true;
+                    if(gamePanel.monster[index].dying == true){
+                        gamePanel.monster[index].attack = 0;
+                    }
                 }
             }
         }

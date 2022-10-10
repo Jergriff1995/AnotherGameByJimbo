@@ -29,7 +29,7 @@ public class TileManager { // manager class for tiles on the game screen.
 
     public void loadMap(){ //converts our text file into java.
         try{
-            InputStream is = getClass().getResourceAsStream("/res/Maps/Sheoah3.txt");
+            InputStream is = getClass().getResourceAsStream("/res/Maps/Sheoah.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;

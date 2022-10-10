@@ -43,13 +43,21 @@ public class EventHandler {
             canTouchEvent = true;
         }
         if(canTouchEvent == true){
-            if(hit(21, 16, "any") == true){healingPool(gp.dialogueState);}
-            if(hit(22, 16, "any") == true){healingPool(gp.dialogueState);}
+            if(hit(21, 16, "down") == true){healingPool(gp.dialogueState);}
+            if(hit(22, 16, "down") == true){healingPool(gp.dialogueState);}
             if(hit(20, 18, "right") == true){healingPool(gp.dialogueState);}
             if(hit(21, 19, "up") == true){healingPool(gp.dialogueState);}
             if(hit(22, 19, "up") == true){healingPool(gp.dialogueState);}
             if(hit(23, 18, "left") == true){healingPool(gp.dialogueState);}
+
+            if(hit(53, 18, "down") == true){healingPool(gp.dialogueState);}
+            if(hit(54, 18, "down") == true){healingPool(gp.dialogueState);}
+            if(hit(55, 20, "right") == true){healingPool(gp.dialogueState);}
+            if(hit(53, 21, "up") == true){healingPool(gp.dialogueState);}
+            if(hit(54, 21, "up") == true){healingPool(gp.dialogueState);}
+            if(hit(52, 20, "left") == true){healingPool(gp.dialogueState);}
         }
+
 
 
     }

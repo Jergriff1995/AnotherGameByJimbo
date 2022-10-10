@@ -200,7 +200,7 @@ public class Entity {
             changeAlpha(g2, 0.8F);
         }
         if(dyingCounter > interval * 9){
-            dying = false;
+            dying = true;
             alive = false;
         }
     }
@@ -239,11 +239,17 @@ public class Entity {
         gamePanel.collisionChecker.checkEntity(this, gamePanel.monster);
         boolean contactPlayer = gamePanel.collisionChecker.checkPlayer(this);
 
-
+        //If a monster contacts a player
         if(this.type ==2 && contactPlayer == true){
+            //player is not invincible
             if(gamePanel.player.invincible == false){
+                //damage dealt
                 gamePanel.playSoundEffect(8);
-                gamePanel.player.life -= 1;
+                int damage = attack - gamePanel.player.defense;
+                if(damage < 0 ){
+                    damage = 0;
+                }
+                gamePanel.player.life -= damage;
                 gamePanel.player.invincible = true;
 
             }
@@ -280,9 +286,10 @@ public class Entity {
             }
             spriteCounter = 0;
         }
+        //Responsible for player invincibility timer
         if(invincible == true){
             invincibleCounter++;
-            if(invincibleCounter > 40){
+            if(invincibleCounter > 60){
                 invincible = false;
                 invincibleCounter = 0;
             }

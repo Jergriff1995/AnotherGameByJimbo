@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class UI  {
     GamePanel gp;
@@ -19,8 +20,8 @@ public class UI  {
     BufferedImage heartHalf;
     BufferedImage heartEmpty;
     public boolean messageOn = false;
-    public String message = "";
-    int messageCounter = 0;
+    ArrayList<String> message = new ArrayList<>();
+    ArrayList<Integer> messageCounter = new ArrayList<>();
     public boolean gameFinished = false;
     double playTime; //double is used so we can display fractions of a second.
     public String currentDialogue = "";
@@ -111,10 +112,10 @@ public class UI  {
 
     }
 
-    public void showMessage(String text){
+    public void addMessage(String text){
 
-        message = text;
-        messageOn = true;
+        message.add(text);
+        messageCounter.add(0);
     }
 
     public void drawTitleScreen(){
