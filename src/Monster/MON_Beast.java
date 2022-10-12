@@ -19,6 +19,7 @@ public class MON_Beast extends Entity {
         life = maxLife;
         attack = 8;
         defense = 0;
+        exp = 5;
 
         solidArea.x = 3;
         solidArea.y = 18;

@@ -61,10 +61,12 @@ public class UI  {
         //Title State
         if(gp.gameState == gp.titleState){
             drawTitleScreen();
+
         }
         //Play State
         if(gp.gameState == gp.playState){
             drawPlayerLife();
+            drawMessage();
 
         }
         //Pause State
@@ -110,6 +112,32 @@ public class UI  {
             x += gp.tileSize;
         }
 
+    }
+
+    public void drawMessage(){
+        int messageX =  gp.tileSize;
+        int messageY = gp.tileSize * 4;
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        for(int i = 0; i < message.size(); i++){
+            if(message.get(i) != null) {
+                g2.setColor(Color.black);
+                g2.drawString(message.get(i), messageX + 2, messageY + 2);
+                g2.setColor(Color.WHITE);
+                g2.drawString(message.get(i), messageX, messageY);
+
+                // messageCounter ++
+                int counter = messageCounter.get(i) + 1;
+                messageCounter.set(i, counter);
+
+                messageY += 50;
+
+                if(messageCounter.get(i) > 120){
+                  message.remove(i);
+                  messageCounter.remove(i);
+                }
+            }
+
+        }
     }
 
     public void addMessage(String text){

@@ -98,6 +98,8 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.ui.currentDialogue = "You drink some water. ##You are feeling better!";
             gp.player.life = gp.player.maxLife;
+            //Respawn all enemies;
+            gp.assetSetter.setMonster();
 
         }
     }

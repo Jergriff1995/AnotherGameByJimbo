@@ -301,9 +301,29 @@ public class Player extends Entity{
                     gamePanel.monster[index].dying = true;
                     if(gamePanel.monster[index].dying == true){
                         gamePanel.monster[index].attack = 0;
+                        gamePanel.ui.addMessage("Killed the " + gamePanel.monster[index].name+ "!");
+                        gamePanel.ui.addMessage("Exp gained " + gamePanel.monster[index].exp);
+                        exp += gamePanel.monster[index].exp;
+                        checkLevelUp();
                     }
                 }
             }
+        }
+    }
+    public void checkLevelUp(){
+        if(exp >= nextLvlExp){
+            level++;
+            nextLvlExp = nextLvlExp + 20;
+            maxLife += 2;
+            strength ++;
+            dexterity ++;
+            attack = getAttack();
+            defense = getDefense();
+            gamePanel.playSoundEffect(12);
+
+            gamePanel.gameState = gamePanel.dialogueState;
+            gamePanel.ui.currentDialogue = "You are " + level + " now! ## " +
+                    "You feel stronger!";
         }
     }
 
