@@ -14,5 +14,6 @@ public class Obj_Key extends Entity { //represents the "Key" object
         name = "Key";
         down1 = setUp("/res/Objects/Key_1", gp.tileSize, gp.tileSize);
         collision = true;
+        description = "[" + name + "]##A mysterious key##I wonder what it unlocks...";
     }
 }

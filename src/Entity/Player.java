@@ -4,10 +4,12 @@ import MainPackage.GamePanel;
 import MainPackage.KeyHandler;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
+import object.Obj_Key;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Player extends Entity{
 
@@ -17,6 +19,8 @@ public class Player extends Entity{
     public final int screenY;
     int standCounter;
     public boolean attackCancelled = false;
+    public ArrayList<Entity> inventory = new ArrayList<Entity>();
+    public final int inventorySize = 20;
     //public int hasKey = 0; // an integer that hold how many keys the player has
 
 
@@ -41,6 +45,7 @@ public class Player extends Entity{
         setDefaultValue();
         getPlayerImage();
         getPlayerAttackImage();
+        setItems();
 
     }
 
@@ -70,6 +75,13 @@ public class Player extends Entity{
         defense = getDefense(); // this total is decided by dex * shield's defense
         maxLife = 6;
         life = maxLife;
+    }
+    public void setItems(){
+        inventory.add(currentWeapon);
+        inventory.add(currentShield);
+        inventory.add(new Obj_Key(gamePanel));
+        inventory.add(new Obj_Key(gamePanel));
+
     }
     public int getAttack(){
         return attack = strength * currentWeapon.attackValue;
@@ -322,7 +334,7 @@ public class Player extends Entity{
             gamePanel.playSoundEffect(12);
 
             gamePanel.gameState = gamePanel.dialogueState;
-            gamePanel.ui.currentDialogue = "You are " + level + " now! ## " +
+            gamePanel.ui.currentDialogue = "You are level " + level + " now! ## " +
                     "You feel stronger!";
         }
     }
