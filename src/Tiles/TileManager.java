@@ -20,7 +20,7 @@ public class TileManager { // manager class for tiles on the game screen.
     public TileManager(GamePanel gp){ // constructor for the tile manager.
         this.gp = gp;
 
-        tile = new Tiles[99];
+        tile = new Tiles[150];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // retrieves the proper tile numbers from the map text file.
 
         getTileImage();
@@ -154,6 +154,10 @@ public class TileManager { // manager class for tiles on the game screen.
         setUp(93, "ZZZPath2", false);
         setUp(94, "ZZZPath3", false);
         setUp(95, "ZZZPath4", false);
+        setUp(96, "ZZZZCliff", true);
+        setUp(97, "ZZZZCliff2", true);
+        setUp(98, "ZZZZStairs", false);
+        setUp(99, "ZZZZStairs2", false);
 
 
 

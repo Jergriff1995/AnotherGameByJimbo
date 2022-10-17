@@ -15,6 +15,21 @@ public class AssetSetter { // this class is responsible for displaying objects i
     }
 
     public void setObject(){ // this method creates objects and places them on the map.
+        int i = 0;
+        gp.obj[i] = new OBJ_HPotion(gp);
+        gp.obj[i].worldX = gp.tileSize * 36;
+        gp.obj[i].worldY = gp.tileSize * 20;
+        i++;
+
+        gp.obj[i] = new OBJ_MagicSword(gp);
+        gp.obj[i].worldX = gp.tileSize * 35;
+        gp.obj[i].worldY = gp.tileSize * 20;
+        i++;
+
+        gp.obj[i] = new OBJ_MagicShield(gp);
+        gp.obj[i].worldX = gp.tileSize * 34;
+        gp.obj[i].worldY = gp.tileSize * 20;
+        i++;
 
 
     }

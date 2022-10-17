@@ -12,7 +12,7 @@ public class MON_Beast extends Entity {
     public MON_Beast(GamePanel gamePanel) {
         super(gamePanel);
         this.gamePanel = gamePanel;
-        type = 2;
+        type = type_Monster;
         name = "Beast";
         speed = 1;
         maxLife = 6;

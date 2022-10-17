@@ -8,6 +8,7 @@ public class OBJ_Shield_Wood extends Entity {
         super(gamePanel);
 
         name = "Wood Shield";
+        type = type_Shield;
         down1 = setUp("/res/Objects/Shield", gamePanel.tileSize, gamePanel.tileSize);
         defenseValue = 1;
         description = "[" + name + "]##A simple wooden shield";

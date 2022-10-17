@@ -11,6 +11,7 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
     public boolean rightPressed;
     public boolean leftPressed;
     public boolean enterPressed;
+    public boolean shotKeyPressed;
 
 
     GamePanel gp;
@@ -102,9 +103,12 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
         if(code == KeyEvent.VK_ENTER){  // if the player has pressed the "P" key.
                 enterPressed = true;
             }
-        if(code == KeyEvent.VK_C){  // if the player has pressed the "P" key.
+        if(code == KeyEvent.VK_C){  // if the player has pressed the "C" key.
                 gp.gameState = gp.characterState;
             }
+        if(code == KeyEvent.VK_F){  // if the player has pressed the "P" key.
+            shotKeyPressed = true;
+        }
 
             //DEBUG
             if(code == KeyEvent.VK_T){  // if the player has pressed the "T" key.
@@ -158,8 +162,10 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
                 gp.ui.slotCol++;
                 gp.playSoundEffect(14);
             }
-
-    }
+        }
+        if(code == KeyEvent.VK_ENTER){
+            gp.player.selectItem();
+        }
     }
     @Override
     public void keyReleased(KeyEvent e) {
@@ -176,6 +182,9 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
         }
         if(code == KeyEvent.VK_D){  // if the player has released the "D" key.
             rightPressed = false;
+        }
+        if(code == KeyEvent.VK_F){  // if the player has pressed the "P" key.
+            shotKeyPressed = false;
         }
     }
 

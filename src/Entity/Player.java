@@ -2,6 +2,7 @@ package Entity;
 
 import MainPackage.GamePanel;
 import MainPackage.KeyHandler;
+import object.OBJ_Fireball;
 import object.OBJ_Shield_Wood;
 import object.OBJ_Sword_Normal;
 import object.Obj_Key;
@@ -39,8 +40,7 @@ public class Player extends Entity{
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
-        attackArea.width = 36;
-        attackArea.height = 36;
+
 
         setDefaultValue();
         getPlayerImage();
@@ -71,6 +71,7 @@ public class Player extends Entity{
         coin = 0;
         currentWeapon = new OBJ_Sword_Normal(gamePanel);
         currentShield = new OBJ_Shield_Wood(gamePanel);
+        projectile = new OBJ_Fireball(gamePanel);
         attack = getAttack(); // this total is decided by strength * weapon's attack
         defense = getDefense(); // this total is decided by dex * shield's defense
         maxLife = 6;
@@ -84,6 +85,7 @@ public class Player extends Entity{
 
     }
     public int getAttack(){
+        attackArea = currentWeapon.attackArea;
         return attack = strength * currentWeapon.attackValue;
     }
     public int getDefense(){
@@ -104,6 +106,7 @@ public class Player extends Entity{
     }
 
     public void getPlayerAttackImage(){
+        if(currentWeapon.name == "Normal Sword"){
         attackUp1 = setUp("/res/Player/DeckAttackUp1", gamePanel.tileSize, gamePanel.tileSize*2);
         attackUp2 = setUp("/res/Player/DeckAttackUp2", gamePanel.tileSize, gamePanel.tileSize*2);
         attackDown1 = setUp("/res/Player/DeckAttackDown1", gamePanel.tileSize, gamePanel.tileSize*2);
@@ -112,6 +115,17 @@ public class Player extends Entity{
         attackLeft2 = setUp("/res/Player/DeckAttackL2", gamePanel.tileSize*2, gamePanel.tileSize);
         attackRight1 = setUp("/res/Player/DeckAttackRight1", gamePanel.tileSize*2, gamePanel.tileSize);
         attackRight2 = setUp("/res/Player/DeckAttackRight2", gamePanel.tileSize*2, gamePanel.tileSize);
+        }
+        if(currentWeapon.name == "Magic Sword"){
+            attackUp1 = setUp("/res/Player/DeckAttackUp1MS", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackUp2 = setUp("/res/Player/DeckAttackUp2MS", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackDown1 = setUp("/res/Player/DeckAttackDown1MS", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackDown2 = setUp("/res/Player/DeckAttackDown2MS", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackLeft1 = setUp("/res/Player/DeckAttackL1MS", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackLeft2 = setUp("/res/Player/DeckAttackL2MS", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackRight1 = setUp("/res/Player/DeckAttackRight1MS", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackRight2 = setUp("/res/Player/DeckAttackRight2MS", gamePanel.tileSize*2, gamePanel.tileSize);
+        }
 
     }
 
@@ -212,6 +226,16 @@ public class Player extends Entity{
             }
 
         }
+        if(gamePanel.keyHandler.shotKeyPressed == true && projectile.alive == false
+         && shotAvailableCounter == 60){
+            //Set default coordinates, direction, and user.
+            projectile.set(worldX, worldY, direction, true, this);
+
+            //Add to the list
+            gamePanel.projectileList.add(projectile);
+            gamePanel.playSoundEffect(15);
+            shotAvailableCounter = 0;
+        }
         if(invincible == true){
             invincibleCounter++;
             if(invincibleCounter > 80){
@@ -219,7 +243,10 @@ public class Player extends Entity{
                 invincibleCounter = 0;
             }
         }
+        if(shotAvailableCounter < 60){
+            shotAvailableCounter ++;
 
+        }
     }
 
     public void attacking(){
@@ -250,7 +277,7 @@ public class Player extends Entity{
             solidArea.height = attackArea.height;
 
             int monsterIndex = gamePanel.collisionChecker.checkEntity(this, gamePanel.monster);
-            damageMonster(monsterIndex);
+            damageMonster(monsterIndex, attack);
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -265,7 +292,20 @@ public class Player extends Entity{
         }
     }
     public void pickUpObject(int index) throws IOException {
-        if(index != 999){}
+        if(index != 999){
+            String text;
+            if(inventory.size() != inventorySize){
+                inventory.add(gamePanel.obj[index]);
+                gamePanel.playSoundEffect(1);
+                text = "Got A " + gamePanel.obj[index].name + "!";
+
+
+            }else {
+                text = "Your inventory is full.";
+            }
+            gamePanel.ui.addMessage(text);
+            gamePanel.obj[index] = null;
+        }
     }
 
     public void interactNPC(int index){
@@ -294,7 +334,7 @@ public class Player extends Entity{
         }
     }
 
-    public void damageMonster(int index){
+    public void damageMonster(int index, int attack){
         if(index != 999){
             if(gamePanel.monster[index].invincible == false){
                 gamePanel.playSoundEffect(10);
@@ -327,6 +367,10 @@ public class Player extends Entity{
             level++;
             nextLvlExp = nextLvlExp + 20;
             maxLife += 2;
+            life += 2;
+            if(life > maxLife){
+                life = maxLife;
+            }
             strength ++;
             dexterity ++;
             attack = getAttack();
@@ -336,6 +380,26 @@ public class Player extends Entity{
             gamePanel.gameState = gamePanel.dialogueState;
             gamePanel.ui.currentDialogue = "You are level " + level + " now! ## " +
                     "You feel stronger!";
+        }
+    }
+
+    public void selectItem(){
+        int itemIndex = gamePanel.ui.getItemIndexOnSlot();
+        if(itemIndex < inventory.size()){
+            Entity selectedItem = inventory.get(itemIndex);
+            if(selectedItem.type == type_Sword){
+                currentWeapon = selectedItem;
+                attack = getAttack();
+                getPlayerAttackImage();
+            }
+            if(selectedItem.type == type_Shield){
+                currentShield = selectedItem;
+                defense = getDefense();
+            }
+            if(selectedItem.type == type_Consumable){
+                selectedItem.use(this);
+                inventory.remove(itemIndex);
+            }
         }
     }
 

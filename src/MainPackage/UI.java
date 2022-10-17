@@ -207,8 +207,7 @@ public class UI  {
         String text = "PAUSED";
         g2.setFont(knightsQuest);
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 44F));
-        int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        int x = gp.screenWidth/2 - getXforCenterText(text)/2;
+        int x = getXforCenterText(text);
         int y = gp.screenHeight/2;
 
         int windowX = gp.tileSize * 4;
@@ -346,6 +345,12 @@ public class UI  {
 
         //Draw Items
         for(int i = 0; i < gp.player.inventory.size(); i++){
+            //Draw Equip Cursor
+            if(gp.player.inventory.get(i) == gp.player.currentWeapon ||
+            gp.player.inventory.get(i) == gp.player.currentShield){
+                g2.setColor(Color.orange);
+                g2.fillRoundRect(slotX, slotY, gp.tileSize, gp.tileSize, 10 ,10);
+            }
 
             g2.drawImage(gp.player.inventory.get(i).down1, slotX, slotY, null);
             slotX += slotSize;
@@ -372,7 +377,7 @@ public class UI  {
         int dFrameY = frameY + frameHeight;
         int dFrameWidth = frameWidth;
         int dFrameHeight = gp.tileSize * 3;
-        drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
+
         //Draw Description Text
         int textX = dFrameX + 20;
         int textY = dFrameY + gp.tileSize;
@@ -380,10 +385,11 @@ public class UI  {
         g2.setFont(g2.getFont().deriveFont(20F));
         int itemIndex = getItemIndexOnSlot();
         if(itemIndex < gp.player.inventory.size()){
-
+            drawSubWindow(dFrameX, dFrameY, dFrameWidth, dFrameHeight);
             for(String line : gp.player.inventory.get(itemIndex).description.split("##")){
                 g2.drawString(line, textX, textY);
                 textY += 32;
+
             }
 
         }

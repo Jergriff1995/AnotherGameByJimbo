@@ -47,6 +47,7 @@ public class Entity {
     public boolean alive = true;
     public boolean dying = false;
     int dyingCounter;
+    public int shotAvailableCounter = 0;
     boolean hpBarOn = false;
     int hpBarCounter;
     public String dialogues[] = new String[20];
@@ -66,10 +67,20 @@ public class Entity {
     public boolean collisionOn = false;
     public int actionLookCounter;
     GamePanel gamePanel;
+
+    //Type
     public int type; // 0 = player, 1 = npc, 2 = monster.
+    public final int type_Player = 0;
+    public final int type_NPC = 1;
+    public final int type_Monster = 2;
+    public final int type_Sword = 3;
+    public final int type_Shield = 4;
+    public final int type_Consumable = 5;
 
     //Character Status
     public int maxLife;
+    public int maxMana;
+    public int mana;
     public int life;
     public int level;
     public int strength;
@@ -82,11 +93,13 @@ public class Entity {
     public int speed;
     public Entity currentWeapon;
     public Entity currentShield;
+    public Projectile projectile;
 
     //Item Attributes
     public int attackValue;
     public int defenseValue;
     public String description = "";
+    public int useCost;
 
     public Entity(GamePanel gamePanel){
         this.gamePanel = gamePanel;
@@ -140,7 +153,7 @@ public class Entity {
             }
 
             //MONSTER HP BAR
-            if(type == 2 && hpBarOn == true){
+            if(type == type_Monster && hpBarOn == true){
                 double oneScale = (double)gamePanel.tileSize/maxLife;
                 double hpBarValue = oneScale*life;
                 g2.setColor(new Color(35 ,35 ,35));
@@ -229,6 +242,9 @@ public class Entity {
     public void damageReaction(){
 
     }
+    public void use(Entity entity){
+
+    }
 
     public void update() throws IOException {
         setAction();
@@ -241,7 +257,7 @@ public class Entity {
         boolean contactPlayer = gamePanel.collisionChecker.checkPlayer(this);
 
         //If a monster contacts a player
-        if(this.type ==2 && contactPlayer == true){
+        if(this.type == type_Monster && contactPlayer == true){
             //player is not invincible
             if(gamePanel.player.invincible == false){
                 //damage dealt
