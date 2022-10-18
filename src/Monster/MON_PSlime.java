@@ -2,26 +2,24 @@ package Monster;
 
 import Entity.Entity;
 import MainPackage.GamePanel;
-import java.util.Random;
-import Object.Obj_SShot;
 
-public class MON_Slime extends Entity {
+import java.util.Random;
+
+public class MON_PSlime extends Entity {
 
     GamePanel gamePanel;
 
-    public MON_Slime(GamePanel gamePanel) {
+    public MON_PSlime(GamePanel gamePanel) {
         super(gamePanel);
         this.gamePanel = gamePanel;
         type = type_Monster;
-        name = "Green Slime";
+        name = "Pink Slime";
         speed = 1;
         maxLife = 4;
         life = maxLife;
         attack = 2;
         defense = 0;
         exp = 2;
-        projectile = new Obj_SShot(gamePanel);
-
 
         solidArea.x = 3;
         solidArea.y = 18;
@@ -33,14 +31,14 @@ public class MON_Slime extends Entity {
     }
 
     public void getImage(){
-        up1 = setUp("/res/Monsters/Slime1", gamePanel.tileSize, gamePanel.tileSize);
-        up2 = setUp("/res/Monsters/Slime2", gamePanel.tileSize, gamePanel.tileSize);
-        down1 = setUp("/res/Monsters/Slime1", gamePanel.tileSize, gamePanel.tileSize);
-        down2 = setUp("/res/Monsters/Slime2", gamePanel.tileSize, gamePanel.tileSize);
-        left1 = setUp("/res/Monsters/Slime1", gamePanel.tileSize, gamePanel.tileSize);
-        left2 = setUp("/res/Monsters/Slime2", gamePanel.tileSize, gamePanel.tileSize);
-        right1 = setUp("/res/Monsters/Slime1", gamePanel.tileSize, gamePanel.tileSize);
-        right2 = setUp("/res/Monsters/Slime2", gamePanel.tileSize, gamePanel.tileSize);
+        up1 = setUp("/res/Monsters/PSlime1", gamePanel.tileSize, gamePanel.tileSize);
+        up2 = setUp("/res/Monsters/PSlime2", gamePanel.tileSize, gamePanel.tileSize);
+        down1 = setUp("/res/Monsters/PSlime1", gamePanel.tileSize, gamePanel.tileSize);
+        down2 = setUp("/res/Monsters/PSlime2", gamePanel.tileSize, gamePanel.tileSize);
+        left1 = setUp("/res/Monsters/PSlime1", gamePanel.tileSize, gamePanel.tileSize);
+        left2 = setUp("/res/Monsters/PSlime2", gamePanel.tileSize, gamePanel.tileSize);
+        right1 = setUp("/res/Monsters/PSlime1", gamePanel.tileSize, gamePanel.tileSize);
+        right2 = setUp("/res/Monsters/PSlime2", gamePanel.tileSize, gamePanel.tileSize);
     }
 
     public void setAction(){
@@ -64,18 +62,10 @@ public class MON_Slime extends Entity {
             }
             actionLookCounter = 0;
 
-
-        }
-        int i = new Random().nextInt(100)+1;
-        if(i > 99 && projectile.alive == false && shotAvailableCounter == 30){
-            projectile.set(worldX, worldY, direction, true, this);
-            gamePanel.projectileList.add(projectile);
-            shotAvailableCounter = 0;
         }
     }
     public void damageReaction(){
         actionLookCounter = 0;
         direction = gamePanel.player.direction;
     }
-
 }

@@ -1,7 +1,8 @@
 package MainPackage;
 
 import Entity.Entity;
-import object.Obj_Heart;
+import Object.Obj_Heart;
+import Object.OBJ_ManaCrystal;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,8 @@ public class UI  {
     BufferedImage heartFull;
     BufferedImage heartHalf;
     BufferedImage heartEmpty;
+    BufferedImage crystalFull;
+    BufferedImage crystalEmpty;
     public boolean messageOn = false;
     ArrayList<String> message = new ArrayList<>();
     ArrayList<Integer> messageCounter = new ArrayList<>();
@@ -53,6 +56,10 @@ public class UI  {
         heartFull = heart.image;
         heartHalf = heart.image2;
         heartEmpty = heart.image3;
+
+        Entity crystal = new OBJ_ManaCrystal(gp);
+        crystalFull = crystal.image;
+        crystalEmpty = crystal.image2;
 
     }
 
@@ -91,7 +98,7 @@ public class UI  {
     public void drawPlayerLife(){
 
 
-        int x = gp.tileSize/2;
+        int x = gp.tileSize/2 - 5;
         int y = gp.tileSize/2;
         int i = 0;
         //Draw Blank Hearts
@@ -101,7 +108,7 @@ public class UI  {
             x += gp.tileSize;
         }
         //Reset Values
-         x = gp.tileSize/2;
+         x = gp.tileSize/2 - 5;
          y = gp.tileSize/2;
          i = 0;
          //Draw Current Health
@@ -114,13 +121,32 @@ public class UI  {
             i++;
             x += gp.tileSize;
         }
+        //Draw Max Mana
+        x = (gp.tileSize/2) - 5;
+        y = (int)(gp.tileSize*1.5);
+        i = 0;
+        while (i < gp.player.maxMana){
+            g2.drawImage(crystalEmpty, x, y, null);
+            i++;
+            x += 38;
+        }
+        //Draw Current Mana
+        x = (gp.tileSize/2) - 5;
+        y = (int)(gp.tileSize*1.5);
+        i = 0;
+        while(i < gp.player.mana){
+            g2.drawImage(crystalFull, x, y, null);
+            i++;
+            x += 38;
+        }
+
 
     }
 
     public void drawMessage(){
-        int messageX =  gp.tileSize;
+        int messageX =  gp.tileSize/2;
         int messageY = gp.tileSize * 4;
-        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 32F));
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 26F));
         for(int i = 0; i < message.size(); i++){
             if(message.get(i) != null) {
                 g2.setColor(Color.black);
@@ -261,6 +287,8 @@ public class UI  {
         textY += lineHeight;
         g2.drawString("Life : " , textX, textY);
         textY += lineHeight;
+        g2.drawString("Mana : " , textX, textY);
+        textY += lineHeight;
         g2.drawString("Strength : ", textX, textY);
         textY += lineHeight;
         g2.drawString("Dexterity : ", textX, textY);
@@ -288,6 +316,11 @@ public class UI  {
         textY += lineHeight;
 
         value = String.valueOf(gp.player.life + "/" + gp.player.maxLife);
+        textX = getXforAlignToRightText(value, tailX);
+        g2.drawString(value, textX, textY);
+        textY += lineHeight;
+
+        value = String.valueOf(gp.player.mana + "/" + gp.player.maxMana);
         textX = getXforAlignToRightText(value, tailX);
         g2.drawString(value, textX, textY);
         textY += lineHeight;

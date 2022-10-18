@@ -2,10 +2,10 @@ package Entity;
 
 import MainPackage.GamePanel;
 import MainPackage.KeyHandler;
-import object.OBJ_Fireball;
-import object.OBJ_Shield_Wood;
-import object.OBJ_Sword_Normal;
-import object.Obj_Key;
+import Object.OBJ_Fireball;
+import Object.OBJ_Shield_Wood;
+import Object.OBJ_Sword_Normal;
+import Object.Obj_Key;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -76,6 +76,9 @@ public class Player extends Entity{
         defense = getDefense(); // this total is decided by dex * shield's defense
         maxLife = 6;
         life = maxLife;
+        maxMana = 4;
+        mana = maxMana;
+        ammo = 10;
     }
     public void setItems(){
         inventory.add(currentWeapon);
@@ -207,7 +210,7 @@ public class Player extends Entity{
             gamePanel.keyHandler.enterPressed = false;
 
 
-            // The following if statment is responsible for the speed at which the player animation sprites are changed.
+            // The following if statement is responsible for the speed at which the player animation sprites are changed.
             spriteCounter++;
             if(spriteCounter > 10){
                 if(spriteNum == 1){
@@ -227,9 +230,13 @@ public class Player extends Entity{
 
         }
         if(gamePanel.keyHandler.shotKeyPressed == true && projectile.alive == false
-         && shotAvailableCounter == 60){
+         && shotAvailableCounter == 60 && projectile.haveResource(this) == true){
+
             //Set default coordinates, direction, and user.
             projectile.set(worldX, worldY, direction, true, this);
+
+            //Subtract projectile cost
+            projectile.subtractResource(this);
 
             //Add to the list
             gamePanel.projectileList.add(projectile);

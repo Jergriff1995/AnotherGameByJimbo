@@ -2,9 +2,8 @@ package MainPackage;
 
 import Entity.Johnny;
 import Entity.Tanner;
-import Monster.MON_Beast;
-import Monster.MON_Slime;
-import object.*;
+import Monster.*;
+import Object.*;
 
 public class AssetSetter { // this class is responsible for displaying objects in the game.
 
@@ -49,24 +48,30 @@ public class AssetSetter { // this class is responsible for displaying objects i
 
     public void setMonster(){
         int i = 0;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_TSlime(gp);
         gp.monster[i].worldX = gp.tileSize*49;
         gp.monster[i].worldY = gp.tileSize*25;
         i++;
-        gp.monster[i] = new MON_Beast(gp);
-        gp.monster[i].worldX = gp.tileSize*53;
-        gp.monster[i].worldY = gp.tileSize*25;
-        i++;
-        gp.monster[i] = new MON_Beast(gp);
-        gp.monster[i].worldX = gp.tileSize*53;
-        gp.monster[i].worldY = gp.tileSize*27;
-        gp.monster[i] = new MON_Beast(gp);
+        gp.monster[i] = new MON_Orc(gp);
         gp.monster[i].worldX = gp.tileSize*53;
         gp.monster[i].worldY = gp.tileSize*27;
         i++;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_Orc(gp);
+        gp.monster[i].worldX = gp.tileSize*57;
+        gp.monster[i].worldY = gp.tileSize*27;
+        i++;
+        gp.monster[i] = new MON_Rorc(gp);
+        gp.monster[i].worldX = gp.tileSize*56;
+        gp.monster[i].worldY = gp.tileSize*27;
+        i++;
+        gp.monster[i] = new MON_Rorc(gp);
+        gp.monster[i].worldX = gp.tileSize*59;
+        gp.monster[i].worldY = gp.tileSize*27;
+        i++;
+
+        gp.monster[i] = new MON_PSlime(gp);
         gp.monster[i].worldX = gp.tileSize*52;
-        gp.monster[i].worldY = gp.tileSize*24;
+        gp.monster[i].worldY = gp.tileSize*22;
         i++;
         gp.monster[i] = new MON_Slime(gp);
         gp.monster[i].worldX = gp.tileSize*53;

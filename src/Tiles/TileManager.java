@@ -158,6 +158,11 @@ public class TileManager { // manager class for tiles on the game screen.
         setUp(97, "ZZZZCliff2", true);
         setUp(98, "ZZZZStairs", false);
         setUp(99, "ZZZZStairs2", false);
+        setUp(100, "ZZZZZCliff", false);
+        setUp(101, "ZZZZZCliff2", false);
+        setUp(102, "ZZZZZCliff3", false);
+        setUp(103, "ZZZZZCliff4", false);
+        setUp(104, "ZZZZZCliff5", false);
 
 
 

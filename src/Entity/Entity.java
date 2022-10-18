@@ -81,6 +81,7 @@ public class Entity {
     public int maxLife;
     public int maxMana;
     public int mana;
+    public int ammo;
     public int life;
     public int level;
     public int strength;
@@ -153,13 +154,14 @@ public class Entity {
             }
 
             //MONSTER HP BAR
-            if(type == type_Monster && hpBarOn == true){
+            if(type == type_Monster && hpBarOn == true && life > 0){
                 double oneScale = (double)gamePanel.tileSize/maxLife;
                 double hpBarValue = oneScale*life;
                 g2.setColor(new Color(35 ,35 ,35));
                 g2.fillRect(screenX -1 , screenY - 16, gamePanel.tileSize +2, 12);
                 g2.setColor(new Color(208, 6, 30));
                 g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 10);
+
 
                 hpBarCounter++;
                 if(hpBarCounter > 600){
@@ -258,18 +260,7 @@ public class Entity {
 
         //If a monster contacts a player
         if(this.type == type_Monster && contactPlayer == true){
-            //player is not invincible
-            if(gamePanel.player.invincible == false){
-                //damage dealt
-                gamePanel.playSoundEffect(8);
-                int damage = attack - gamePanel.player.defense;
-                if(damage < 0 ){
-                    damage = 0;
-                }
-                gamePanel.player.life -= damage;
-                gamePanel.player.invincible = true;
-
-            }
+          damagePlayer(attack);
         }
 
 
@@ -310,6 +301,23 @@ public class Entity {
                 invincible = false;
                 invincibleCounter = 0;
             }
+        }
+        if(shotAvailableCounter < 30){
+            shotAvailableCounter++;
+        }
+    }
+    public void damagePlayer(int attack){
+        //player is not invincible
+        if(gamePanel.player.invincible == false){
+            //damage dealt
+            gamePanel.playSoundEffect(8);
+            int damage = attack - gamePanel.player.defense;
+            if(damage < 0 ){
+                damage = 0;
+            }
+            gamePanel.player.life -= damage;
+            gamePanel.player.invincible = true;
+
         }
     }
 

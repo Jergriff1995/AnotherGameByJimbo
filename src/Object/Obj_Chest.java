@@ -1,10 +1,7 @@
-package object;
+package Object;
 
 import Entity.Entity;
 import MainPackage.GamePanel;
-
-import javax.imageio.ImageIO;
-import java.io.IOException;
 
 public class Obj_Chest extends Entity {
 

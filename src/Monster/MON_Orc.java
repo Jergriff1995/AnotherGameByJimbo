@@ -5,21 +5,22 @@ import MainPackage.GamePanel;
 
 import java.util.Random;
 
-public class MON_Beast extends Entity {
+public class MON_Orc extends Entity {
 
     GamePanel gamePanel;
 
-    public MON_Beast(GamePanel gamePanel) {
+
+    public MON_Orc(GamePanel gamePanel) {
         super(gamePanel);
         this.gamePanel = gamePanel;
         type = type_Monster;
-        name = "Beast";
-        speed = 3;
-        maxLife = 18;
+        name = "Orc";
+        speed = 2;
+        maxLife = 8;
         life = maxLife;
-        attack = 8;
+        attack = 4;
         defense = 0;
-        exp = 15;
+        exp = 5;
 
         solidArea.x = 3;
         solidArea.y = 18;
@@ -31,14 +32,14 @@ public class MON_Beast extends Entity {
     }
 
     public void getImage(){
-        up1 = setUp("/res/Monsters/NPC1B1", gamePanel.tileSize, gamePanel.tileSize);
-        up2 = setUp("/res/Monsters/NPC1B2", gamePanel.tileSize, gamePanel.tileSize);
-        down1 = setUp("/res/Monsters/NPC1F1", gamePanel.tileSize, gamePanel.tileSize);
-        down2 = setUp("/res/Monsters/NPC1F2", gamePanel.tileSize, gamePanel.tileSize);
-        left1 = setUp("/res/Monsters/NPC1L1", gamePanel.tileSize, gamePanel.tileSize);
-        left2 = setUp("/res/Monsters/NPC1L2", gamePanel.tileSize, gamePanel.tileSize);
-        right1 = setUp("/res/Monsters/NPC1R1", gamePanel.tileSize, gamePanel.tileSize);
-        right2 = setUp("/res/Monsters/NPC1R2", gamePanel.tileSize, gamePanel.tileSize);
+        up1 = setUp("/res/Monsters/OrcU1", gamePanel.tileSize, gamePanel.tileSize);
+        up2 = setUp("/res/Monsters/OrcU2", gamePanel.tileSize, gamePanel.tileSize);
+        down1 = setUp("/res/Monsters/OrcD1", gamePanel.tileSize, gamePanel.tileSize);
+        down2 = setUp("/res/Monsters/OrcD2", gamePanel.tileSize, gamePanel.tileSize);
+        left1 = setUp("/res/Monsters/OrcL1", gamePanel.tileSize, gamePanel.tileSize);
+        left2 = setUp("/res/Monsters/OrcL2", gamePanel.tileSize, gamePanel.tileSize);
+        right1 = setUp("/res/Monsters/OrcR1", gamePanel.tileSize, gamePanel.tileSize);
+        right2 = setUp("/res/Monsters/OrcR2", gamePanel.tileSize, gamePanel.tileSize);
     }
 
     public void setAction(){
@@ -80,5 +81,4 @@ public class MON_Beast extends Entity {
             direction = "left";
         }
     }
-
 }
