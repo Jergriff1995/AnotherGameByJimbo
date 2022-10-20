@@ -52,6 +52,7 @@ public class Entity {
     int hpBarCounter;
     public String dialogues[] = new String[20];
     int dialogueIndex = 0;
+    public int value;
 
     public String direction = "down";
 
@@ -76,6 +77,7 @@ public class Entity {
     public final int type_Sword = 3;
     public final int type_Shield = 4;
     public final int type_Consumable = 5;
+    public final int type_PickUp = 6;
 
     //Character Status
     public int maxLife;
@@ -181,7 +183,7 @@ public class Entity {
                 dyingAnimation(g2);
             }
 
-            g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+            g2.drawImage(image, screenX, screenY, null);
             changeAlpha(g2, 1.0F);
         }
 
@@ -318,6 +320,19 @@ public class Entity {
             gamePanel.player.life -= damage;
             gamePanel.player.invincible = true;
 
+        }
+    }
+    public void checkDrop(){
+
+    }
+    public void dropItem(Entity droppedItem){
+        for(int i = 0; i < gamePanel.obj.length; i++){
+            if(gamePanel.obj[i] == null){
+                gamePanel.obj[i] = droppedItem;
+                gamePanel.obj[i].worldX = worldX;
+                gamePanel.obj[i].worldY = worldY;
+                break;
+            }
         }
     }
 

@@ -20,14 +20,29 @@ public class AssetSetter { // this class is responsible for displaying objects i
         gp.obj[i].worldY = gp.tileSize * 20;
         i++;
 
-        gp.obj[i] = new OBJ_MagicSword(gp);
+        gp.obj[i] = new OBJ_MPotion(gp);
+        gp.obj[i].worldX = gp.tileSize * 36;
+        gp.obj[i].worldY = gp.tileSize * 16;
+        i++;
+
+        gp.obj[i] = new OBJ_Gem1(gp);
         gp.obj[i].worldX = gp.tileSize * 35;
         gp.obj[i].worldY = gp.tileSize * 20;
         i++;
 
-        gp.obj[i] = new OBJ_MagicShield(gp);
+        gp.obj[i] = new OBJ_Gem2(gp);
         gp.obj[i].worldX = gp.tileSize * 34;
         gp.obj[i].worldY = gp.tileSize * 20;
+        i++;
+
+        gp.obj[i] = new OBJ_Gem2(gp);
+        gp.obj[i].worldX = gp.tileSize * 34;
+        gp.obj[i].worldY = gp.tileSize * 17;
+        i++;
+
+        gp.obj[i] = new OBJ_Gem3(gp);
+        gp.obj[i].worldX = gp.tileSize * 34;
+        gp.obj[i].worldY = gp.tileSize * 19;
         i++;
 
 
@@ -48,33 +63,41 @@ public class AssetSetter { // this class is responsible for displaying objects i
 
     public void setMonster(){
         int i = 0;
-        gp.monster[i] = new MON_TSlime(gp);
+        gp.monster[i] = new MON_Slime(gp);
         gp.monster[i].worldX = gp.tileSize*49;
         gp.monster[i].worldY = gp.tileSize*25;
         i++;
-        gp.monster[i] = new MON_Orc(gp);
+        gp.monster[i] = new MON_Slime(gp);
         gp.monster[i].worldX = gp.tileSize*53;
         gp.monster[i].worldY = gp.tileSize*27;
         i++;
-        gp.monster[i] = new MON_Orc(gp);
+        gp.monster[i] = new MON_Slime(gp);
         gp.monster[i].worldX = gp.tileSize*57;
         gp.monster[i].worldY = gp.tileSize*27;
         i++;
-        gp.monster[i] = new MON_Rorc(gp);
+        gp.monster[i] = new MON_Slime(gp);
         gp.monster[i].worldX = gp.tileSize*56;
         gp.monster[i].worldY = gp.tileSize*27;
         i++;
-        gp.monster[i] = new MON_Rorc(gp);
+        gp.monster[i] = new MON_Slime(gp);
         gp.monster[i].worldX = gp.tileSize*59;
         gp.monster[i].worldY = gp.tileSize*27;
         i++;
 
-        gp.monster[i] = new MON_PSlime(gp);
+        gp.monster[i] = new MON_Slime(gp);
         gp.monster[i].worldX = gp.tileSize*52;
         gp.monster[i].worldY = gp.tileSize*22;
         i++;
         gp.monster[i] = new MON_Slime(gp);
-        gp.monster[i].worldX = gp.tileSize*53;
+        gp.monster[i].worldX = gp.tileSize*51;
         gp.monster[i].worldY = gp.tileSize*20;
+        i++;
+        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i].worldX = gp.tileSize*53;
+        gp.monster[i].worldY = gp.tileSize*27;
+        i++;
+        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i].worldX = gp.tileSize*52;
+        gp.monster[i].worldY = gp.tileSize*27;
     }
 }

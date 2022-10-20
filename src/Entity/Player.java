@@ -300,20 +300,33 @@ public class Player extends Entity{
     }
     public void pickUpObject(int index) throws IOException {
         if(index != 999){
-            String text;
-            if(inventory.size() != inventorySize){
-                inventory.add(gamePanel.obj[index]);
-                gamePanel.playSoundEffect(1);
-                text = "Got A " + gamePanel.obj[index].name + "!";
 
 
+            //Pickup Only Items
+            if(gamePanel.obj[index].type == type_PickUp){
+
+                gamePanel.obj[index].use(this);
+                gamePanel.obj[index] = null;
             }else {
-                text = "Your inventory is full.";
+                String text;
+                if(inventory.size() != inventorySize){
+                    inventory.add(gamePanel.obj[index]);
+                    gamePanel.playSoundEffect(1);
+                    text = "Got A " + gamePanel.obj[index].name + "!";
+
+
+                }else {
+                    text = "Your inventory is full.";
+                }
+                gamePanel.ui.addMessage(text);
+                gamePanel.obj[index] = null;
             }
-            gamePanel.ui.addMessage(text);
-            gamePanel.obj[index] = null;
-        }
-    }
+            }
+
+            }
+
+
+
 
     public void interactNPC(int index){
       if(gamePanel.keyHandler.enterPressed == true){

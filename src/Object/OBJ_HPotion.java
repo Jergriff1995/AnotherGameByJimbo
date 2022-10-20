@@ -4,14 +4,15 @@ import Entity.Entity;
 import MainPackage.GamePanel;
 
 public class OBJ_HPotion extends Entity {
-    int value = 6;
+
     GamePanel gp;
     public OBJ_HPotion(GamePanel gamePanel) {
         super(gamePanel);
         this.gp = gamePanel;
         type = type_Consumable;
+        value = 6;
         name = "Health Potion";
-        down1 = setUp("/res/Objects/HPotion", gamePanel.tileSize, gamePanel.tileSize);
+        down1 = setUp("/res/Objects/HPotion", gamePanel.tileSize-15, gamePanel.tileSize-15);
         description = "[" + name + "]##Restores 6 health.";
     }
 
