@@ -4,6 +4,12 @@ import Entity.Entity;
 import MainPackage.GamePanel;
 
 import java.util.Random;
+import Object.OBJ_Gem1;
+import Object.OBJ_Gem2;
+import Object.OBJ_HPotion;
+import Object.OBJ_PickUpHeart;
+import Object.OBJ_MPotion;
+
 
 public class MON_PSlime extends Entity {
 
@@ -67,5 +73,24 @@ public class MON_PSlime extends Entity {
     public void damageReaction(){
         actionLookCounter = 0;
         direction = gamePanel.player.direction;
+    }
+    public void checkDrop(){
+
+        int i = new Random().nextInt(200)+1;
+
+        //Set the Monster drop.
+
+        if(i < 50){
+            dropItem(new OBJ_Gem1(gamePanel));
+        }
+        if(i >= 50 && i < 75 || i >= 115){
+            dropItem(new OBJ_PickUpHeart(gamePanel));
+        }
+        if(i >= 75 && i < 100){
+            dropItem(new OBJ_MPotion(gamePanel));
+        }
+        if(i >= 100 && i < 115){
+            dropItem(new OBJ_Gem2(gamePanel));
+        }
     }
 }

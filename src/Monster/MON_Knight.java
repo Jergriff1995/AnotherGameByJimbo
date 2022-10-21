@@ -4,46 +4,45 @@ import Entity.Entity;
 import MainPackage.GamePanel;
 
 import java.util.Random;
-import Object.OBJ_Gem1;
-import Object.OBJ_Gem2;
-import Object.OBJ_HPotion;
-import Object.OBJ_PickUpHeart;
-import Object.OBJ_MPotion;
+import java.util.Set;
 
-public class MON_Beast extends Entity {
+import Object.OBJ_KnightSword;
+
+public class MON_Knight extends Entity {
 
     GamePanel gamePanel;
 
-    public MON_Beast(GamePanel gamePanel) {
+
+    public MON_Knight(GamePanel gamePanel) {
         super(gamePanel);
         this.gamePanel = gamePanel;
         type = type_Monster;
-        name = "Beast";
-        speed = 3;
-        maxLife = 18;
+        name = "Green Knight";
+        speed = 2;
+        maxLife = 8;
         life = maxLife;
-        attack = 8;
+        attack = 4;
         defense = 0;
-        exp = 15;
+        exp = 5;
 
         solidArea.x = 3;
         solidArea.y = 18;
-        solidArea.width = 42;
-        solidArea.height = 30;
+        solidArea.width = 52;
+        solidArea.height = 40;
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
         getImage();
     }
 
     public void getImage(){
-        up1 = setUp("/res/Monsters/NPC1B1", gamePanel.tileSize, gamePanel.tileSize);
-        up2 = setUp("/res/Monsters/NPC1B2", gamePanel.tileSize, gamePanel.tileSize);
-        down1 = setUp("/res/Monsters/NPC1F1", gamePanel.tileSize, gamePanel.tileSize);
-        down2 = setUp("/res/Monsters/NPC1F2", gamePanel.tileSize, gamePanel.tileSize);
-        left1 = setUp("/res/Monsters/NPC1L1", gamePanel.tileSize, gamePanel.tileSize);
-        left2 = setUp("/res/Monsters/NPC1L2", gamePanel.tileSize, gamePanel.tileSize);
-        right1 = setUp("/res/Monsters/NPC1R1", gamePanel.tileSize, gamePanel.tileSize);
-        right2 = setUp("/res/Monsters/NPC1R2", gamePanel.tileSize, gamePanel.tileSize);
+        up1 = setUp("/res/Monsters/KnightU1", gamePanel.tileSize+10, gamePanel.tileSize+10);
+        up2 = setUp("/res/Monsters/KnightU2", gamePanel.tileSize+10, gamePanel.tileSize+10);
+        down1 = setUp("/res/Monsters/KnightD1", gamePanel.tileSize+10, gamePanel.tileSize+10);
+        down2 = setUp("/res/Monsters/KnightD2", gamePanel.tileSize+10, gamePanel.tileSize+10);
+        left1 = setUp("/res/Monsters/KnightL1", gamePanel.tileSize+10, gamePanel.tileSize+10);
+        left2 = setUp("/res/Monsters/KnightL2", gamePanel.tileSize+10, gamePanel.tileSize+10);
+        right1 = setUp("/res/Monsters/KnightR1", gamePanel.tileSize+10, gamePanel.tileSize+10);
+        right2 = setUp("/res/Monsters/KnightR2", gamePanel.tileSize+10, gamePanel.tileSize+10);
     }
 
     public void setAction(){
@@ -92,17 +91,16 @@ public class MON_Beast extends Entity {
         //Set the Monster drop.
 
         if(i < 50){
-            dropItem(new OBJ_Gem1(gamePanel));
+            dropItem(new OBJ_KnightSword(gamePanel));
         }
         if(i >= 50 && i < 75 || i >= 115){
-            dropItem(new OBJ_PickUpHeart(gamePanel));
+            dropItem(new OBJ_KnightSword(gamePanel));
         }
         if(i >= 75 && i < 100){
-            dropItem(new OBJ_MPotion(gamePanel));
+            dropItem(new OBJ_KnightSword(gamePanel));
         }
         if(i >= 100 && i < 115){
-            dropItem(new OBJ_Gem2(gamePanel));
+            dropItem(new OBJ_KnightSword(gamePanel));
         }
     }
-
 }

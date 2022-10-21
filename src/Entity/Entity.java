@@ -78,6 +78,7 @@ public class Entity {
     public final int type_Shield = 4;
     public final int type_Consumable = 5;
     public final int type_PickUp = 6;
+    public final int type_Axe = 7;
 
     //Character Status
     public int maxLife;
@@ -258,6 +259,8 @@ public class Entity {
         gamePanel.collisionChecker.checkObject(this, false);
         gamePanel.collisionChecker.checkEntity(this, gamePanel.npc);
         gamePanel.collisionChecker.checkEntity(this, gamePanel.monster);
+        gamePanel.collisionChecker.checkEntity(this, gamePanel.iTile);
+
         boolean contactPlayer = gamePanel.collisionChecker.checkPlayer(this);
 
         //If a monster contacts a player

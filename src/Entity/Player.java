@@ -129,6 +129,26 @@ public class Player extends Entity{
             attackRight1 = setUp("/res/Player/DeckAttackRight1MS", gamePanel.tileSize*2, gamePanel.tileSize);
             attackRight2 = setUp("/res/Player/DeckAttackRight2MS", gamePanel.tileSize*2, gamePanel.tileSize);
         }
+        if(currentWeapon.name == "Knight Sword"){
+            attackUp1 = setUp("/res/Player/DeckAttackUp1KS", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackUp2 = setUp("/res/Player/DeckAttackUp2KS", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackDown1 = setUp("/res/Player/DeckAttackDown1KS", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackDown2 = setUp("/res/Player/DeckAttackDown2KS", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackLeft1 = setUp("/res/Player/DeckAttackL2KS", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackLeft2 = setUp("/res/Player/DeckAttackL1KS", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackRight1 = setUp("/res/Player/DeckAttackR1KS", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackRight2 = setUp("/res/Player/DeckAttackR2KS", gamePanel.tileSize*2, gamePanel.tileSize);
+        }
+        if(currentWeapon.name == "Woodcutter's Axe"){
+            attackUp1 = setUp("/res/Player/DeckAxeU2", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackUp2 = setUp("/res/Player/DeckAxeU1", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackDown1 = setUp("/res/Player/DeckAxeD1", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackDown2 = setUp("/res/Player/DeckAxeD2", gamePanel.tileSize, gamePanel.tileSize*2);
+            attackLeft1 = setUp("/res/Player/DeckAxeL1", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackLeft2 = setUp("/res/Player/DeckAxeL2", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackRight1 = setUp("/res/Player/DeckAxeR2", gamePanel.tileSize*2, gamePanel.tileSize);
+            attackRight2 = setUp("/res/Player/DeckAxeR1", gamePanel.tileSize*2, gamePanel.tileSize);
+        }
 
     }
 
@@ -177,6 +197,9 @@ public class Player extends Entity{
             int monsterIndex = gamePanel.collisionChecker.checkEntity(this, gamePanel.monster);
             contactMonster(monsterIndex);
 
+            //CHECK INTERACTIVE TILE COLLISION
+            int iTileIndex = gamePanel.collisionChecker.checkEntity(this, gamePanel.iTile);
+
 
             //CHECK EVENT
             gamePanel.eventHandler.checkEvent();
@@ -201,7 +224,11 @@ public class Player extends Entity{
                 }
             }
             if(keyHandler.enterPressed == true && attackCancelled == false){
-                gamePanel.playSoundEffect(9);
+                if(gamePanel.player.currentWeapon.type == type_Sword){
+                    gamePanel.playSoundEffect(9);
+                } else {
+                    gamePanel.playSoundEffect(16);
+                }
                 attacking = true;
                 spriteCounter = 0;
             }
@@ -285,6 +312,10 @@ public class Player extends Entity{
 
             int monsterIndex = gamePanel.collisionChecker.checkEntity(this, gamePanel.monster);
             damageMonster(monsterIndex, attack);
+
+            int iTileIndex = gamePanel.collisionChecker.checkEntity(this, gamePanel.iTile);
+                damageInteractiveTile(iTileIndex);
+
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -382,6 +413,19 @@ public class Player extends Entity{
             }
         }
     }
+    public void damageInteractiveTile(int index){
+
+        if(index != 999 && gamePanel.iTile[index].destructible == true &&
+                gamePanel.iTile[index].isCorrectItem(this) == true &&
+                gamePanel.iTile[index].invincible == false){
+
+            gamePanel.iTile[index].life--;
+            gamePanel.iTile[index].invincible = true;
+            if(gamePanel.iTile[index].life == 0){
+                gamePanel.iTile[index] = gamePanel.iTile[index].getDestroyedForm();
+            }
+        }
+    }
     public void checkLevelUp(){
         if(exp >= nextLvlExp){
             level++;
@@ -407,7 +451,7 @@ public class Player extends Entity{
         int itemIndex = gamePanel.ui.getItemIndexOnSlot();
         if(itemIndex < inventory.size()){
             Entity selectedItem = inventory.get(itemIndex);
-            if(selectedItem.type == type_Sword){
+            if(selectedItem.type == type_Sword || selectedItem.type == type_Axe){
                 currentWeapon = selectedItem;
                 attack = getAttack();
                 getPlayerAttackImage();

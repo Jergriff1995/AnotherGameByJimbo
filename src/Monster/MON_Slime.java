@@ -6,6 +6,7 @@ import java.util.Random;
 import Object.OBJ_Gem1;
 import Object.OBJ_Gem2;
 import Object.OBJ_HPotion;
+import Object.OBJ_PickUpHeart;
 import Object.OBJ_MPotion;
 import Object.Obj_SShot;
 
@@ -91,8 +92,8 @@ public class MON_Slime extends Entity {
         if(i < 50){
             dropItem(new OBJ_Gem1(gamePanel));
         }
-        if(i >= 50 && i < 75){
-            dropItem(new OBJ_HPotion(gamePanel));
+        if(i >= 50 && i < 75 || i >= 115){
+            dropItem(new OBJ_PickUpHeart(gamePanel));
         }
         if(i >= 75 && i < 100){
             dropItem(new OBJ_MPotion(gamePanel));

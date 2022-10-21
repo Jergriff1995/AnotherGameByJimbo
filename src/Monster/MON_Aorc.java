@@ -10,24 +10,24 @@ import Object.OBJ_HPotion;
 import Object.OBJ_PickUpHeart;
 import Object.OBJ_MPotion;
 
-
-public class MON_TSlime extends Entity {
+public class MON_Aorc extends Entity {
 
     GamePanel gamePanel;
 
-    public MON_TSlime(GamePanel gamePanel) {
+
+    public MON_Aorc(GamePanel gamePanel) {
         super(gamePanel);
         this.gamePanel = gamePanel;
         type = type_Monster;
-        name = "Toxic Slime";
+        name = "Axe Orc";
         speed = 1;
-        maxLife = 4;
+        maxLife = 12;
         life = maxLife;
-        attack = 2;
+        attack = 8;
         defense = 0;
-        exp = 2;
+        exp = 7;
 
-        solidArea.x = 3;
+        solidArea.x = 3 + (gamePanel.tileSize/2);
         solidArea.y = 18;
         solidArea.width = 42;
         solidArea.height = 30;
@@ -37,14 +37,14 @@ public class MON_TSlime extends Entity {
     }
 
     public void getImage(){
-        up1 = setUp("/res/Monsters/TSlime1", gamePanel.tileSize, gamePanel.tileSize);
-        up2 = setUp("/res/Monsters/TSlime2", gamePanel.tileSize, gamePanel.tileSize);
-        down1 = setUp("/res/Monsters/TSlime1", gamePanel.tileSize, gamePanel.tileSize);
-        down2 = setUp("/res/Monsters/TSlime2", gamePanel.tileSize, gamePanel.tileSize);
-        left1 = setUp("/res/Monsters/TSlime1", gamePanel.tileSize, gamePanel.tileSize);
-        left2 = setUp("/res/Monsters/TSlime2", gamePanel.tileSize, gamePanel.tileSize);
-        right1 = setUp("/res/Monsters/TSlime1", gamePanel.tileSize, gamePanel.tileSize);
-        right2 = setUp("/res/Monsters/TSlime2", gamePanel.tileSize, gamePanel.tileSize);
+        up1 = setUp("/res/Monsters/AOrcU1",gamePanel.tileSize *2, gamePanel.tileSize);
+        up2 = setUp("/res/Monsters/AOrcU2", gamePanel.tileSize*2, gamePanel.tileSize);
+        down1 = setUp("/res/Monsters/AOrcD1", gamePanel.tileSize*2, gamePanel.tileSize);
+        down2 = setUp("/res/Monsters/AOrcD2", gamePanel.tileSize*2, gamePanel.tileSize);
+        left1 = setUp("/res/Monsters/AOrcL1", gamePanel.tileSize*2, gamePanel.tileSize);
+        left2 = setUp("/res/Monsters/AOrcL2", gamePanel.tileSize*2, gamePanel.tileSize);
+        right1 = setUp("/res/Monsters/AOrcR1", gamePanel.tileSize*2, gamePanel.tileSize);
+        right2 = setUp("/res/Monsters/AOrcR2", gamePanel.tileSize*2, gamePanel.tileSize);
     }
 
     public void setAction(){
@@ -72,7 +72,19 @@ public class MON_TSlime extends Entity {
     }
     public void damageReaction(){
         actionLookCounter = 0;
-        direction = gamePanel.player.direction;
+
+        if(gamePanel.player.direction == "up"){
+            direction = "down";
+        }
+        if(gamePanel.player.direction == "down"){
+            direction = "up";
+        }
+        if(gamePanel.player.direction == "left"){
+            direction = "right";
+        }
+        if(gamePanel.player.direction == "right"){
+            direction = "left";
+        }
     }
     public void checkDrop(){
 

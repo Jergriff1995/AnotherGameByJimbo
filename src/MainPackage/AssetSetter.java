@@ -4,6 +4,7 @@ import Entity.Johnny;
 import Entity.Tanner;
 import Monster.*;
 import Object.*;
+import Tiles_Interactive.IT_DryTree;
 
 public class AssetSetter { // this class is responsible for displaying objects in the game.
 
@@ -15,7 +16,7 @@ public class AssetSetter { // this class is responsible for displaying objects i
 
     public void setObject(){ // this method creates objects and places them on the map.
         int i = 0;
-        gp.obj[i] = new OBJ_HPotion(gp);
+        gp.obj[i] = new OBJ_Axe(gp);
         gp.obj[i].worldX = gp.tileSize * 36;
         gp.obj[i].worldY = gp.tileSize * 20;
         i++;
@@ -63,28 +64,28 @@ public class AssetSetter { // this class is responsible for displaying objects i
 
     public void setMonster(){
         int i = 0;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_Aorc(gp);
         gp.monster[i].worldX = gp.tileSize*49;
         gp.monster[i].worldY = gp.tileSize*25;
         i++;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_Beast(gp);
         gp.monster[i].worldX = gp.tileSize*53;
         gp.monster[i].worldY = gp.tileSize*27;
         i++;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_Knight(gp);
         gp.monster[i].worldX = gp.tileSize*57;
         gp.monster[i].worldY = gp.tileSize*27;
         i++;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_Orc(gp);
         gp.monster[i].worldX = gp.tileSize*56;
-        gp.monster[i].worldY = gp.tileSize*27;
+        gp.monster[i].worldY = gp.tileSize*28;
         i++;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_PSlime(gp);
         gp.monster[i].worldX = gp.tileSize*59;
         gp.monster[i].worldY = gp.tileSize*27;
         i++;
 
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_Rorc(gp);
         gp.monster[i].worldX = gp.tileSize*52;
         gp.monster[i].worldY = gp.tileSize*22;
         i++;
@@ -92,12 +93,22 @@ public class AssetSetter { // this class is responsible for displaying objects i
         gp.monster[i].worldX = gp.tileSize*51;
         gp.monster[i].worldY = gp.tileSize*20;
         i++;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_TSlime(gp);
         gp.monster[i].worldX = gp.tileSize*53;
-        gp.monster[i].worldY = gp.tileSize*27;
+        gp.monster[i].worldY = gp.tileSize*24;
         i++;
-        gp.monster[i] = new MON_Slime(gp);
+        gp.monster[i] = new MON_Knight(gp);
         gp.monster[i].worldX = gp.tileSize*52;
         gp.monster[i].worldY = gp.tileSize*27;
+    }
+    public void setInteractiveTile(){
+        int i = 0;
+        gp.iTile[i] = new IT_DryTree(gp, 37, 20 );
+        i++;
+        gp.iTile[i] = new IT_DryTree(gp, 37, 21 );
+        i++;
+        gp.iTile[i] = new IT_DryTree(gp, 37, 22 );
+        i++;
+
     }
 }
