@@ -4,6 +4,8 @@ import Entity.Entity;
 import Entity.Projectile;
 import MainPackage.GamePanel;
 
+import java.awt.*;
+
 public class Obj_SShot extends Projectile {
 
     GamePanel gamePanel;
@@ -42,5 +44,21 @@ public class Obj_SShot extends Projectile {
     }
     public void subtractResource(Entity entity){
         entity.ammo -= useCost;
+    }
+    public Color getParticleColor(){
+        Color color = new Color(89, 45, 32);
+        return color;
+    }
+    public int getParticleSize(){
+        int size = 10;
+        return size;
+    }
+    public int getParticleSpeed(){
+        int speed = 1;
+        return speed;
+    }
+    public int getParticleMaxLife(){
+        int maxLife = 20;
+        return maxLife;
     }
 }
