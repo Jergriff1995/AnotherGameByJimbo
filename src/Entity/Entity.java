@@ -347,6 +347,8 @@ public class Entity {
         gamePanel.ui.currentDialogue = dialogues[dialogueIndex];
         dialogueIndex++ ;
 
+
+
         switch (gamePanel.player.direction){
             case "up":
                 direction = "down";
@@ -387,10 +389,10 @@ public class Entity {
         int speed = generator.getParticleSpeed();
         int maxLife = generator.getParticleMaxLife();
 
-        Particle p1 = new Particle(gamePanel, generator, color, size, speed, maxLife, -2, -1);
-        Particle p2 = new Particle(gamePanel, generator, color, size, speed, maxLife, 2, -1);
-        Particle p3 = new Particle(gamePanel, generator, color, size, speed, maxLife, -2, 1);
-        Particle p4 = new Particle(gamePanel, generator, color, size, speed, maxLife, 2, 1);
+        Particle p1 = new Particle(gamePanel, target, color, size, speed, maxLife, -2, -1);
+        Particle p2 = new Particle(gamePanel, target, color, size, speed, maxLife, 2, -1);
+        Particle p3 = new Particle(gamePanel, target, color, size, speed, maxLife, -2, 1);
+        Particle p4 = new Particle(gamePanel, target, color, size, speed, maxLife, 2, 1);
         gamePanel.particleList.add(p1);
         gamePanel.particleList.add(p2);
         gamePanel.particleList.add(p3);

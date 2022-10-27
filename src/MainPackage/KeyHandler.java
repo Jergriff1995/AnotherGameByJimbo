@@ -49,6 +49,10 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
         else if (gp.gameState == gp.characterState){
             characterState(code);
         }
+        //OPTIONS STATE
+        else if (gp.gameState == gp.optionsState){
+            optionState(code);
+        }
     }
             //NOTE: never turn column selection mode on in IntelliJ...
     public void titleState(int code){
@@ -109,6 +113,9 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
         if(code == KeyEvent.VK_F){  // if the player has pressed the "P" key.
             shotKeyPressed = true;
         }
+        if(code == KeyEvent.VK_ESCAPE){ // if the player has pressed the "W" key.
+            gp.gameState = gp.optionsState;
+        }
 
             //DEBUG
             if(code == KeyEvent.VK_T){  // if the player has pressed the "T" key.
@@ -165,6 +172,16 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
         }
         if(code == KeyEvent.VK_ENTER){
             gp.player.selectItem();
+        }
+    }
+
+    public void optionState(int code){
+
+        if(code == KeyEvent.VK_ESCAPE){
+            gp.gameState = gp.playState;
+        }
+        if(code == KeyEvent.VK_ENTER){
+            enterPressed = true;
         }
     }
     @Override

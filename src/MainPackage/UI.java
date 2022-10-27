@@ -28,6 +28,7 @@ public class UI  {
     public boolean gameFinished = false;
     double playTime; //double is used so we can display fractions of a second.
     public String currentDialogue = "";
+
     public int commandNum = 0;
     public int slotCol= 0;
     public int slotRow = 0;
@@ -92,6 +93,10 @@ public class UI  {
         if(gp.gameState == gp.characterState){
             drawCharacterScreen();
             drawInventory();
+        }
+        //Options State
+        if(gp.gameState == gp.optionsState){
+           drawOptionsScreen();
         }
     }
 
@@ -251,7 +256,7 @@ public class UI  {
 
       //Window for dialogue
      int x = gp.tileSize * 2;
-     int y = gp.tileSize / 2;
+     int y = gp.tileSize * 2;
      int width = gp.screenWidth - (gp.tileSize * 4);
      int height = gp.tileSize * 4;
      drawSubWindow(x, y ,width, height);
@@ -268,7 +273,7 @@ public class UI  {
     public void drawCharacterScreen(){
 
         //Create a frame.
-        final int frameX = gp.tileSize;
+        final int frameX = gp.tileSize * 1;
         final int frameY = gp.tileSize;
         final int frameWidth = gp.tileSize * 5;
         final int frameHeight = gp.tileSize *10;
@@ -363,7 +368,7 @@ public class UI  {
 
     public void drawInventory(){
         //Frame
-        int frameX = gp.tileSize * 9;
+        int frameX = gp.tileSize * 13;
         int frameY = gp.tileSize;
         int frameWidth  = gp.tileSize * 6;
         int frameHeight = gp.tileSize * 5;
@@ -433,6 +438,19 @@ public class UI  {
     public int getItemIndexOnSlot(){
         int itemIndex = slotCol+(slotRow * 5);
         return itemIndex;
+    }
+
+    public void drawOptionsScreen(){
+
+        g2.setColor(Color.WHITE);
+        g2.setFont(g2.getFont().deriveFont(30F));
+
+        //Sub Window
+        int frameX = gp.tileSize *6;
+        int frameY = gp.tileSize;
+        int frameWidth = gp.tileSize * 8;
+        int frameHeight = gp.tileSize * 10;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
     }
 
 

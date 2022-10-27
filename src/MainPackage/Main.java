@@ -3,12 +3,16 @@ package MainPackage;
 import javax.swing.*;
 
 public class Main {
+    public static JFrame window;
+
+
 
     public static void main(String[] args) {
-        JFrame window = new JFrame();
+        window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //the game closes when exited.
         window.setResizable(false); // the game is not resizable.
         window.setTitle("Deck's Quest"); // the title
+        window.setUndecorated(true);
 
         GamePanel gamePanel = new GamePanel(); // creates new game panel
         window.add(gamePanel);

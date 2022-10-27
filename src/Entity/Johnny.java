@@ -15,6 +15,7 @@ public class Johnny extends Entity{
 
         getImage();
         setDialogue();
+
     }
     public void getImage(){ //retrieves the sprites for the NPC.
 
@@ -35,6 +36,8 @@ public class Johnny extends Entity{
         dialogues[3] = "...";
 
     }
+
+
 
     public void setAction(){
 
@@ -63,5 +66,7 @@ public class Johnny extends Entity{
 
     public void speak(){
 
-        super.speak();}
+        super.speak();
+
+    }
 }

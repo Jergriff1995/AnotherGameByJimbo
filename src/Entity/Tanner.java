@@ -2,6 +2,7 @@ package Entity;
 
 import MainPackage.GamePanel;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Tanner extends Entity{
@@ -14,6 +15,7 @@ public class Tanner extends Entity{
 
         getImage();
         setDialogue();
+
     }
     public void getImage(){ //retrieves the sprites for the NPC.
 
@@ -34,6 +36,7 @@ public class Tanner extends Entity{
       dialogues[3] = "Good luck on your quest Deck...";
 
     }
+
 
     public void setAction(){
 
@@ -61,30 +64,11 @@ public class Tanner extends Entity{
     }
 
     public void speak(){
+
         super.speak();
-//        if(dialogues[dialogueIndex] == null){
-//            dialogueIndex = 0;
-//        }
-//
-//        gamePanel.ui.currentDialogue = dialogues[dialogueIndex];
-//        dialogueIndex++ ;
-//
-//        switch (gamePanel.player.direction){
-//            case "up":
-//                direction = "down";
-//                break;
-//
-//            case "down":
-//                direction = "up";
-//                break;
-//
-//            case "left":
-//                direction = "right";
-//                break;
-//
-//            case "right":
-//                direction = "left";
-//                break;
-//        }
+
+
+
+
     }
 }

@@ -366,6 +366,7 @@ public class Player extends Entity{
               gamePanel.gameState = gamePanel.dialogueState;
               gamePanel.npc[index].speak();
           }
+
       }
       }
 
