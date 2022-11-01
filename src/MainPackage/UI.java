@@ -32,6 +32,7 @@ public class UI  {
     public int commandNum = 0;
     public int slotCol= 0;
     public int slotRow = 0;
+    int substate = 0;
 
     DecimalFormat decimalFormat = new DecimalFormat("#0.00"); //a handy method for formatting decimal values.
 
@@ -191,7 +192,7 @@ public class UI  {
         int y = gp.tileSize * 3;
 
         //Shadow
-        g2.setColor(new Color(31, 193, 173));
+        g2.setColor(new Color(94, 100, 100));
         g2.drawString(text, x+5,y+5);
 
         //Main Color
@@ -451,10 +452,124 @@ public class UI  {
         int frameWidth = gp.tileSize * 8;
         int frameHeight = gp.tileSize * 10;
         drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        switch(substate){
+            case 0: optionsTop(frameX, frameY); break;
+            case 1: optionsFullScreenNotification(frameX, frameY); break;
+            case 2: break;
+        }
+        gp.keyHandler.enterPressed = false;
     }
+    public void optionsTop(int frameX, int frameY){
+        int textX;
+        int textY;
+        //TITLE
+        String text = "Options";
+        textX = getXforCenterText(text);
+        textY = frameY + gp.tileSize;
+        g2.drawString(text, textX, textY);
+
+        //FULL SCREEN ON OFF
+        textX = frameX + gp.tileSize;
+        textY += gp.tileSize*2;
+        g2.drawString("Full Screen", textX, textY);
+        if(commandNum == 0){
+            g2.drawString(">", textX - 25, textY);
+            if(gp.keyHandler.enterPressed == true){
+                if(gp.fullScreenOn == false){
+                    gp.fullScreenOn = true;
+                }
+                else if (gp.fullScreenOn == true){
+                    gp.fullScreenOn = false;
+
+                }
+                substate = 1;
+            }
+
+        }
+
+        //MUSIC
+        textY +=  gp.tileSize;
+        g2.drawString("Music", textX, textY);
+        if(commandNum == 1){
+            g2.drawString(">", textX - 25, textY);
+        }
+
+        //SOUND EFFECTS
+        textY +=  gp.tileSize;
+        g2.drawString("Sound FX", textX, textY);
+        if(commandNum == 2){
+            g2.drawString(">", textX - 25, textY);
+        }
+
+        //CONTROLS
+        textY +=  gp.tileSize;
+        g2.drawString("Controls", textX, textY);
+        if(commandNum == 3){
+            g2.drawString(">", textX - 25, textY);
+        }
+
+        //END THE GAME
+        textY +=  gp.tileSize;
+        g2.drawString("Quit Game", textX, textY);
+        if(commandNum == 4){
+            g2.drawString(">", textX - 25, textY);
+        }
+
+        //RETURN TO GAME
+        textY +=  gp.tileSize * 2;
+        g2.drawString("Back", textX, textY);
+        if(commandNum == 5){
+            g2.drawString(">", textX - 25, textY);
+        }
+
+        //FULL SCREEN TEXT BOX
+        textX = frameX + gp.tileSize*5 + 70;
+        textY = frameY + gp.tileSize*2 + 30;
+        g2.setStroke(new BasicStroke(2));
+        g2.drawRect(textX, textY, 24, 24);
+        if(gp.fullScreenOn == true){
+            g2.fillRect(textX, textY, 24, 24);
+        }
 
 
 
+        //MUSIC VOLUME
+        textX = frameX + (int)(gp.tileSize * 4.5);
+        textY += gp.tileSize;
+        g2.drawRect(textX, textY, 120, 19);
+        int volumeWidth = 24* gp.music.volumeScale;
+        g2.fillRect(textX, textY, volumeWidth, 19);
+
+        //SE VOLUME
+        textX = frameX + (int)(gp.tileSize * 4.5);
+        textY += gp.tileSize;
+        g2.drawRect(textX, textY, 120, 19);
+        int seWidth = 24* gp.sound.volumeScale;
+        g2.fillRect(textX, textY, seWidth, 19);
+
+
+    }
+    public void optionsFullScreenNotification(int frameX, int frameY){
+        int textX = frameX + gp.tileSize;
+        int textY = frameY + gp.tileSize * 4;
+
+        currentDialogue = "Display mode will##be changed after##restarting the game!";
+        for(String line : currentDialogue.split("##")){
+            g2.drawString(line, textX, textY);
+            textY += 40;
+        }
+        //BACK
+        textY += gp.tileSize*2;
+        g2.drawString("Back", textX, textY);
+        if(commandNum == 0){
+            g2.drawString(">", textX - 25, textY);
+            if(gp.keyHandler.enterPressed == true){
+                substate = 0;
+            }
+        }
+
+    }
     public void drawSubWindow(int x, int y, int width, int height){
         Color c = new Color(0,0,0, 205);
         g2.setColor(c);

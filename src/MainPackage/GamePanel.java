@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
     int screenHeight2 = screenHeight;
     BufferedImage tempScreen;
     Graphics2D g2;
+    public boolean fullScreenOn = false;
 
     public final int fps = 60; // the number of frames per second the game will run at.
 
