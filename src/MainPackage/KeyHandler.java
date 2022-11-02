@@ -53,6 +53,10 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
         else if (gp.gameState == gp.optionsState){
             optionState(code);
         }
+        //GAME OVER STATE
+        else if (gp.gameState == gp.gameOverState){
+            gameOverState(code);
+        }
     }
             //NOTE: never turn column selection mode on in IntelliJ...
     public void titleState(int code){
@@ -125,8 +129,13 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
                     checkDrawTime = false;
                 }
             }
+        if(code == KeyEvent.VK_L){
+           switch (gp.currentMap){
+               case 0: gp.tileManager.loadMap("res/Maps/Sheoah.txt", 0); break;
+               case 1: gp.tileManager.loadMap("res/Maps/MattHouse.txt", 1); break;
+           }
+        }
     }
-
     public void pauseState(int code){
         if(code == KeyEvent.VK_P){
             gp.gameState = gp.playState;
@@ -174,7 +183,6 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
             gp.player.selectItem();
         }
     }
-
     public void optionState(int code){
 
         if(code == KeyEvent.VK_ESCAPE){
@@ -187,6 +195,7 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
         int maxCommandNum = 0;
         switch (gp.ui.substate){
             case 0 : maxCommandNum = 5; break;
+            case 3 : maxCommandNum = 1; break;
         }
         if(code == KeyEvent.VK_W){
             gp.ui.commandNum --;
@@ -229,6 +238,35 @@ public class KeyHandler implements KeyListener {   //KeyListener if the interfac
                 }
             }
         }
+    }
+    public void gameOverState(int code){
+
+        if(code == KeyEvent.VK_W){
+            gp.ui.commandNum--;
+            if(gp.ui.commandNum < 0){
+                gp.ui.commandNum = 1;
+            }
+            gp.playSoundEffect(19);
+        }
+
+        if(code == KeyEvent.VK_S){
+            gp.ui.commandNum++;
+            if(gp.ui.commandNum > 1){
+                gp.ui.commandNum = 0;
+            }
+            gp.playSoundEffect(18);
+        }
+        if(code == KeyEvent.VK_ENTER){
+            if(gp.ui.commandNum == 0){
+                gp.gameState = gp.playState;
+                gp.retry();
+            }
+            if(gp.ui.commandNum == 1){
+                gp.gameState = gp.titleState;
+                gp.restart();
+            }
+        }
+
     }
     @Override
     public void keyReleased(KeyEvent e) {

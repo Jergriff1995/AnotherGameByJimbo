@@ -15,21 +15,23 @@ public class TileManager { // manager class for tiles on the game screen.
 
     GamePanel gp;
     public Tiles[] tile; // an array that holds the tile images.
-    public int mapTileNum[][]; // a 2D array that represents a predetirmened map.
+    public int mapTileNum[][][]; // a 2D array that represents a predetirmened map.
 
     public TileManager(GamePanel gp){ // constructor for the tile manager.
         this.gp = gp;
 
         tile = new Tiles[150];
-        mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow]; // retrieves the proper tile numbers from the map text file.
+        mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow]; // retrieves the proper tile numbers from the map text file.
 
         getTileImage();
-        loadMap();
+        loadMap("/res/Maps/Sheoah.txt", 0);
+        loadMap("/res/Maps/MattHouse.txt", 1);
     }
 
-    public void loadMap(){ //converts our text file into java.
+    public void loadMap(String filepath, int map){ //converts our text file into java.
         try{
-            InputStream is = getClass().getResourceAsStream("/res/Maps/Sheoah.txt");
+
+            InputStream is = getClass().getResourceAsStream(filepath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             int col = 0;
@@ -42,7 +44,7 @@ public class TileManager { // manager class for tiles on the game screen.
 
                     int num = Integer.parseInt(numbers[col]);
 
-                    mapTileNum[col][row] = num;
+                    mapTileNum[map][col][row] = num;
                     col++;
                 }
                 if(col == gp.maxWorldCol){
@@ -140,7 +142,7 @@ public class TileManager { // manager class for tiles on the game screen.
         setUp(79, "ZZHouse10", true);
         setUp(80, "ZZHouse11", true);
         setUp(81, "ZZHouse12", true);
-        setUp(82, "ZZHouse2", true);
+        setUp(82, "ZZHouse2", false);
         setUp(83, "ZZHouse3", true);
         setUp(84, "ZZHouse4", true);
         setUp(85, "ZZHouse5", true);
@@ -163,6 +165,16 @@ public class TileManager { // manager class for tiles on the game screen.
         setUp(102, "ZZZZZCliff3", false);
         setUp(103, "ZZZZZCliff4", false);
         setUp(104, "ZZZZZCliff5", false);
+        setUp(105, "ZZZZZZIntWall", true);
+        setUp(106, "ZZZZZZIntWall2", true);
+        setUp(107, "ZZZZZZIntWall3", true);
+        setUp(108, "ZZZZZZIntWall4", true);
+        setUp(109, "ZZZZZZIntWall5", true);
+        setUp(110, "ZZZZZZIntWall6", true);
+        setUp(111, "ZZZZZZVoid", true);
+        setUp(112, "ZZZZZZWoodFloor", false);
+        setUp(113, "ZZZZZZWoodFloor2", false);
+        setUp(114, "ZZZZZZWoodFloor3", false);
 
 
 
@@ -191,7 +203,7 @@ public class TileManager { // manager class for tiles on the game screen.
 
         while(worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow){ // a loop that draws a tile for every open place on the game screen.
 
-            int tileNum = mapTileNum[worldCol][worldRow];
+            int tileNum = mapTileNum[gp.currentMap][worldCol][worldRow];
 
             int worldX = worldCol * gp.tileSize;
             int worldY = worldRow * gp.tileSize;

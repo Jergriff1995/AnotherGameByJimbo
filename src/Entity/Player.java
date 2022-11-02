@@ -48,7 +48,17 @@ public class Player extends Entity{
         setItems();
 
     }
+    public void setDefaultPositions(){
+        worldX = gamePanel.tileSize * 18;
+        worldY = gamePanel.tileSize * 15;
 
+        direction = "down";
+    }
+    public void restoreLifeAndMana(){
+        life = maxLife;
+        mana = maxMana;
+        invincible = false;
+    }
     public void setDefaultValue(){ // the default values associated with the player.
         // the next two lines are the coordinates of the player's starting location
         worldX = gamePanel.tileSize * 18;
@@ -81,6 +91,7 @@ public class Player extends Entity{
         ammo = 10;
     }
     public void setItems(){
+        inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new Obj_Key(gamePanel));
@@ -281,6 +292,12 @@ public class Player extends Entity{
             shotAvailableCounter ++;
 
         }
+        if(life <= 0){
+            gamePanel.gameState = gamePanel.gameOverState;
+            gamePanel.ui.commandNum = -1;
+            gamePanel.stopMusic();
+            gamePanel.playSoundEffect(20);
+        }
     }
 
     public void attacking(){
@@ -334,23 +351,23 @@ public class Player extends Entity{
 
 
             //Pickup Only Items
-            if(gamePanel.obj[index].type == type_PickUp){
+            if(gamePanel.obj[gamePanel.currentMap][index].type == type_PickUp){
 
-                gamePanel.obj[index].use(this);
-                gamePanel.obj[index] = null;
+                gamePanel.obj[gamePanel.currentMap][index].use(this);
+                gamePanel.obj[gamePanel.currentMap][index] = null;
             }else {
                 String text;
                 if(inventory.size() != inventorySize){
-                    inventory.add(gamePanel.obj[index]);
+                    inventory.add(gamePanel.obj[gamePanel.currentMap][index]);
                     gamePanel.playSoundEffect(1);
-                    text = "Got A " + gamePanel.obj[index].name + "!";
+                    text = "Got A " + gamePanel.obj[gamePanel.currentMap][index].name + "!";
 
 
                 }else {
                     text = "Your inventory is full.";
                 }
                 gamePanel.ui.addMessage(text);
-                gamePanel.obj[index] = null;
+                gamePanel.obj[gamePanel.currentMap][index] = null;
             }
             }
 
@@ -364,7 +381,7 @@ public class Player extends Entity{
           if(index != 999){
               attackCancelled = true;
               gamePanel.gameState = gamePanel.dialogueState;
-              gamePanel.npc[index].speak();
+              gamePanel.npc[gamePanel.currentMap][index].speak();
           }
 
       }
@@ -372,10 +389,10 @@ public class Player extends Entity{
 
     public void contactMonster(int index){
         if(index != 999){
-            if(invincible == false && gamePanel.monster[index].dying == false){
+            if(invincible == false && gamePanel.monster[gamePanel.currentMap][index].dying == false){
                 gamePanel.playSoundEffect(8);
                 //Damage Calculation Player to Monster
-                int damage = gamePanel.monster[index].attack - defense;
+                int damage = gamePanel.monster[gamePanel.currentMap][index].attack - defense;
                 if(damage < 0 ){
                     damage = 0;
                 }
@@ -388,26 +405,26 @@ public class Player extends Entity{
 
     public void damageMonster(int index, int attack){
         if(index != 999){
-            if(gamePanel.monster[index].invincible == false){
+            if(gamePanel.monster[gamePanel.currentMap][index].invincible == false){
                 gamePanel.playSoundEffect(10);
 
                 //Damage Calculation Player to Monster
-                int damage = attack - gamePanel.monster[index].defense;
+                int damage = attack - gamePanel.monster[gamePanel.currentMap][index].defense;
                 if(damage < 0 ){
                     damage = 0;
                 }
-                gamePanel.monster[index].life -= damage;
+                gamePanel.monster[gamePanel.currentMap][index].life -= damage;
                 gamePanel.ui.addMessage(damage + " damage!");
-                gamePanel.monster[index].invincible = true;
-                gamePanel.monster[index].damageReaction();
+                gamePanel.monster[gamePanel.currentMap][index].invincible = true;
+                gamePanel.monster[gamePanel.currentMap][index].damageReaction();
 
-                if(gamePanel.monster[index].life <= 0){
-                    gamePanel.monster[index].dying = true;
-                    if(gamePanel.monster[index].dying == true){
-                        gamePanel.monster[index].attack = 0;
-                        gamePanel.ui.addMessage("Killed the " + gamePanel.monster[index].name+ "!");
-                        gamePanel.ui.addMessage("Exp gained " + gamePanel.monster[index].exp);
-                        exp += gamePanel.monster[index].exp;
+                if(gamePanel.monster[gamePanel.currentMap][index].life <= 0){
+                    gamePanel.monster[gamePanel.currentMap][index].dying = true;
+                    if(gamePanel.monster[gamePanel.currentMap][index].dying == true){
+                        gamePanel.monster[gamePanel.currentMap][index].attack = 0;
+                        gamePanel.ui.addMessage("Killed the " + gamePanel.monster[gamePanel.currentMap][index].name+ "!");
+                        gamePanel.ui.addMessage("Exp gained " + gamePanel.monster[gamePanel.currentMap][index].exp);
+                        exp += gamePanel.monster[gamePanel.currentMap][index].exp;
                         checkLevelUp();
                     }
                 }
@@ -416,17 +433,17 @@ public class Player extends Entity{
     }
     public void damageInteractiveTile(int index){
 
-        if(index != 999 && gamePanel.iTile[index].destructible == true &&
-                gamePanel.iTile[index].isCorrectItem(this) == true &&
-                gamePanel.iTile[index].invincible == false){
+        if(index != 999 && gamePanel.iTile[gamePanel.currentMap][index].destructible == true &&
+                gamePanel.iTile[gamePanel.currentMap][index].isCorrectItem(this) == true &&
+                gamePanel.iTile[gamePanel.currentMap][index].invincible == false){
 
-            gamePanel.iTile[index].life--;
-            gamePanel.iTile[index].invincible = true;
+            gamePanel.iTile[gamePanel.currentMap][index].life--;
+            gamePanel.iTile[gamePanel.currentMap][index].invincible = true;
 
-            generateParticle(gamePanel.iTile[index], gamePanel.iTile[index]);
+            generateParticle(gamePanel.iTile[gamePanel.currentMap][index], gamePanel.iTile[gamePanel.currentMap][index]);
 
-            if(gamePanel.iTile[index].life == 0){
-                gamePanel.iTile[index] = gamePanel.iTile[index].getDestroyedForm();
+            if(gamePanel.iTile[gamePanel.currentMap][index].life == 0){
+                gamePanel.iTile[gamePanel.currentMap][index] = gamePanel.iTile[gamePanel.currentMap][index].getDestroyedForm();
             }
         }
     }
@@ -556,7 +573,7 @@ public class Player extends Entity{
 
         //MAKES THE PLAYER HALF TRANSPARENT WHEN INVINCIBLE
         if(invincible == true){
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
         }
         g2.drawImage(image, tempScreenX, tempScreenY,null); //this line is responsible for actually drawing the player image.
 
