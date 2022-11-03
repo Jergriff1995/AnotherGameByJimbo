@@ -20,12 +20,15 @@ public class TileManager { // manager class for tiles on the game screen.
     public TileManager(GamePanel gp){ // constructor for the tile manager.
         this.gp = gp;
 
-        tile = new Tiles[150];
-        mapTileNum = new int[gp.maxMap][gp.maxWorldCol][gp.maxWorldRow]; // retrieves the proper tile numbers from the map text file.
+        tile = new Tiles[250];
+        mapTileNum = new int[gp.maxMap][gp.maxWorldCol+1][gp.maxWorldRow+1]; // retrieves the proper tile numbers from the map text file.
 
         getTileImage();
         loadMap("/res/Maps/Sheoah.txt", 0);
         loadMap("/res/Maps/MattHouse.txt", 1);
+        loadMap("/res/Maps/ChaseShop.txt", 2);
+        loadMap("/res/Maps/JohnnyHouse.txt", 3);
+        loadMap("/res/Maps/TannerHouse.txt", 4);
     }
 
     public void loadMap(String filepath, int map){ //converts our text file into java.
@@ -175,6 +178,53 @@ public class TileManager { // manager class for tiles on the game screen.
         setUp(112, "ZZZZZZWoodFloor", false);
         setUp(113, "ZZZZZZWoodFloor2", false);
         setUp(114, "ZZZZZZWoodFloor3", false);
+        setUp(115, "ZZZZZZZShop1", true);
+        setUp(116, "ZZZZZZZShop2", true);
+        setUp(117, "ZZZZZZZShop3", true);
+        setUp(118, "ZZZZZZZShop4", true);
+        setUp(119, "ZZZZZZZShop5", true);
+        setUp(120, "ZZZZZZZShop6", true);
+        setUp(121, "ZZZZZZZShop7", true);
+        setUp(122, "ZZZZZZZShop8", false);
+        setUp(123, "ZZZZZZZShop9", true);
+        setUp(124, "ZZZZZZZShopFloor2", false);
+        setUp(125, "ZZZZZZZShopFloor3", false);
+        setUp(126, "ZZZZZZZShopFloor4", false);
+        setUp(127, "ZZZZZZZShopTile", false);
+        setUp(128, "ZZZZZZZShopWall", true);
+        setUp(129, "ZZZZZZZShopWall2", true);
+
+        setUp(130, "ZZZZZZZZBuilding1", true);
+        setUp(131, "ZZZZZZZZBuilding10", false);
+        setUp(132, "ZZZZZZZZBuilding11", false);
+        setUp(133, "ZZZZZZZZBuilding12", true);
+        setUp(134, "ZZZZZZZZBuilding2", true);
+        setUp(135, "ZZZZZZZZBuilding3", true);
+        setUp(136, "ZZZZZZZZBuilding4", true);
+        setUp(137, "ZZZZZZZZBuilding5", true);
+        setUp(138, "ZZZZZZZZBuilding6", true);
+        setUp(139, "ZZZZZZZZBuilding7", true);
+        setUp(140, "ZZZZZZZZBuilding8", true);
+        setUp(141, "ZZZZZZZZBuilding9", true);
+
+        setUp(142, "ZZZZZZZZBuildingTwo1", true);
+        setUp(143, "ZZZZZZZZBuildingTwo10", false);
+        setUp(144, "ZZZZZZZZBuildingTwo11", true);
+        setUp(145, "ZZZZZZZZBuildingTwo12", true);
+        setUp(146, "ZZZZZZZZBuildingTwo2", true);
+        setUp(147, "ZZZZZZZZBuildingTwo3", true);
+        setUp(148, "ZZZZZZZZBuildingTwo4", true);
+        setUp(149, "ZZZZZZZZBuildingTwo5", true);
+        setUp(150, "ZZZZZZZZBuildingTwo6", true);
+        setUp(151, "ZZZZZZZZBuildingTwo7", false);
+        setUp(152, "ZZZZZZZZBuildingTwo8", true);
+        setUp(153, "ZZZZZZZZBuildingTwo9", true);
+
+        setUp(154, "ZZZZZZZZFloor4", false);
+        setUp(155, "ZZZZZZZZWall", true);
+        setUp(156, "ZZZZZZZZWall2", true);
+
+
 
 
 

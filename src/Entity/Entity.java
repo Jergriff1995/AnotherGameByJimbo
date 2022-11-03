@@ -79,6 +79,7 @@ public class Entity {
     public final int type_Consumable = 5;
     public final int type_PickUp = 6;
     public final int type_Axe = 7;
+    public final int type_Static = 8;
 
     //Character Status
     public int maxLife;

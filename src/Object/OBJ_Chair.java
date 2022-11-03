@@ -3,16 +3,16 @@ package Object;
 import Entity.Entity;
 import MainPackage.GamePanel;
 
-public class Obj_Chest extends Entity {
+public class OBJ_Chair extends Entity {
 
 
 
-    public Obj_Chest(GamePanel gp){
+    public OBJ_Chair(GamePanel gp){
         super(gp);
 
         name = "Chest";
         type = 8;
-        down1 = setUp("/res/Objects/Chest_1", gp.tileSize, gp.tileSize);
+        down1 = setUp("/res/Objects/1Chair", gp.tileSize, gp.tileSize);
         collision = true;
     }
 }

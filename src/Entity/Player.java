@@ -357,17 +357,23 @@ public class Player extends Entity{
                 gamePanel.obj[gamePanel.currentMap][index] = null;
             }else {
                 String text;
-                if(inventory.size() != inventorySize){
+                if(inventory.size() != inventorySize && gamePanel.obj[gamePanel.currentMap][index].type != type_Static){
                     inventory.add(gamePanel.obj[gamePanel.currentMap][index]);
                     gamePanel.playSoundEffect(1);
                     text = "Got A " + gamePanel.obj[gamePanel.currentMap][index].name + "!";
+                    gamePanel.ui.addMessage(text);
 
 
-                }else {
+                }else if(gamePanel.obj[gamePanel.currentMap][index].type != type_Static){
                     text = "Your inventory is full.";
+                    gamePanel.ui.addMessage(text);
                 }
-                gamePanel.ui.addMessage(text);
-                gamePanel.obj[gamePanel.currentMap][index] = null;
+
+                //gamePanel.ui.addMessage(text);
+                if(gamePanel.obj[gamePanel.currentMap][index].type != type_Static){
+                    gamePanel.obj[gamePanel.currentMap][index] = null;
+                }
+
             }
             }
 

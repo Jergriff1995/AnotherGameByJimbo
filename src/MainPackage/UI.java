@@ -33,6 +33,7 @@ public class UI  {
     public int slotCol= 0;
     public int slotRow = 0;
     int substate = 0;
+    int counter = 0;
 
     DecimalFormat decimalFormat = new DecimalFormat("#0.00"); //a handy method for formatting decimal values.
 
@@ -102,6 +103,10 @@ public class UI  {
         //Game Over State
         if(gp.gameState == gp.gameOverState){
             drawGameOverScreen();
+        }
+        //Transition State
+        if(gp.gameState == gp.transitionState){
+            drawTransition();
         }
     }
 
@@ -521,6 +526,21 @@ public class UI  {
 
 
     }
+    public void drawTransition(){
+        counter++;
+        g2.setColor(new Color(0,0,0,counter*5));
+        g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+
+        if(counter == 50){
+            counter = 0;
+            gp.gameState = gp.playState;
+            gp.currentMap = gp.eventHandler.tempMap;
+            gp.player.worldX = gp.tileSize * gp.eventHandler.tempCol;
+            gp.player.worldY = gp.tileSize * gp.eventHandler.tempRow;
+            gp.eventHandler.previousEventX = gp.player.worldX;
+            gp.eventHandler.previousEventY = gp.player.worldY;
+        }
+    }
     public void optionsTop(int frameX, int frameY){
         int textX;
         int textY;
@@ -711,6 +731,9 @@ public class UI  {
             if(gp.keyHandler.enterPressed == true){
                 substate = 0;
                 gp.gameState = gp.titleState;
+                gp.music.stop();
+                gp.playMusic(0);
+                gp.restart();
             }
         }
         text = "No Way!";

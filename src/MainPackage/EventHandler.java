@@ -8,6 +8,10 @@ public class EventHandler {
     EventRect eventRect[][][];
     int previousEventX;
     int previousEventY;
+    int tempMap;
+    int tempCol;
+    int tempRow;
+
     boolean canTouchEvent = true;
 
 
@@ -62,12 +66,27 @@ public class EventHandler {
             else if(hit(0,54, 21, "up") == true){healingPool(gp.dialogueState);}
             else if(hit(0,52, 20, "left") == true){healingPool(gp.dialogueState);}
 
-            //ENTER AND EXIT HOUSE
-
+            //ENTER AND EXIT MATT'S HOUSE
+            //EXIT
             else if(hit(1,48, 56, "any") == true){teleport(0, 22, 17);}
             else if(hit(1,47, 56, "any") == true){teleport(0, 22, 17);}
-
+            //ENTER
             else if(hit(0,22, 17, "any") == true){teleport(1, 48, 56);}
+
+
+            //ENTER AND EXIT SHOP
+            else if(hit(0,71, 36, "any") == true){teleport(2, 53, 61);}
+            else if(hit(2,53, 61, "any") == true){teleport(0, 71, 36);}
+
+
+            //JOHNNY'S HOUSE
+            else if(hit(0,52, 38, "any") == true){teleport(3, 21, 31);}
+            else if(hit(0,51, 38, "any") == true){teleport(3, 21, 31);}
+            else if(hit(3,21, 31, "any") == true){teleport(0, 53, 39);}
+
+            //TANNER'S HOUSE
+            else if(hit(0,76, 43, "any") == true){teleport(4, 21, 31);}
+            else if(hit(4,21, 31, "any") == true){teleport(0, 76, 43);}
 
         }
 
@@ -121,14 +140,12 @@ public class EventHandler {
 
         }
     }
+
     public void teleport(int map, int col, int row){
-
-        gp.currentMap = map;
-        gp.player.worldX = gp.tileSize * col;
-        gp.player.worldY = gp.tileSize * row;
-
-        previousEventX = gp.player.worldX;
-        previousEventY = gp.player.worldY;
+        gp.gameState = gp.transitionState;
+        tempMap = map;
+        tempCol = col;
+        tempRow = row;
         canTouchEvent = false;
         gp.playSoundEffect(21);
 

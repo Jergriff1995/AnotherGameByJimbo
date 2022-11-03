@@ -71,6 +71,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int characterState = 4;
     public final int optionsState = 5;
     public final int gameOverState = 6;
+    public final int transitionState = 7;
 
 
     public GamePanel(){ //the constructor for the game's screen.
@@ -82,9 +83,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     }
     public void setupGame(){
-      assetSetter.setObject();
       assetSetter.setNPC();
       assetSetter.setMonster();
+      assetSetter.setObject();
       assetSetter.setInteractiveTile();
       playMusic(0);
       gameState = titleState;
@@ -101,6 +102,8 @@ public class GamePanel extends JPanel implements Runnable{
         player.setDefaultPositions();
         assetSetter.setNPC();
         assetSetter.setMonster();
+        playMusic(5);
+
     }
     public void restart(){
         player.setDefaultPositions();
@@ -109,6 +112,7 @@ public class GamePanel extends JPanel implements Runnable{
         assetSetter.setNPC();
         assetSetter.setMonster();
         assetSetter.setInteractiveTile();
+
 
 
     }
@@ -309,95 +313,6 @@ public class GamePanel extends JPanel implements Runnable{
         g.drawImage(tempScreen,0, 0 , screenWidth2, screenHeight2, null);
         g.dispose();
     }
-
-
-//    public void paintComponent(Graphics g){ // how objects are drawn in the game. paintComponent is a method built into Java.
-//        super.paintComponent(g);
-//        Graphics2D g2 = (Graphics2D) g; //Graphics2D extends Graphics and provides more sophisticated control.
-//
-//        //DEBUG
-//        long drawStart = 0;
-//        if(keyHandler.checkDrawTime == true){
-//            drawStart = System.nanoTime();
-//        }
-//
-//        //TITLE SCREEN
-//        if(gameState == titleState){
-//            ui.draw(g2);
-//        } else {
-//            tileManager.draw(g2);
-//
-//
-//            //Interactive Tile
-//            for(int i = 0; i < iTile.length; i++){
-//                if(iTile[i] != null){
-//                    iTile[i].draw(g2);
-//                }
-//            }
-//
-//
-//
-//            //ADD ENTITIES TO THE LIST
-//            entityList.add(player);
-//            for(int i = 0; i < npc.length; i++){
-//                if (npc[i] != null){
-//                    entityList.add(npc[i]);
-//                }
-//            }
-//            for(int i = 0; i < obj.length; i++){
-//                if (obj[i] != null){
-//                    entityList.add(obj[i]);
-//                }
-//            }
-//            for(int i = 0; i < monster.length; i++){
-//                if (monster[i] != null){
-//                    entityList.add(monster[i]);
-//                }
-//            }
-//            for(int i = 0; i < projectileList.size(); i++){
-//                if (projectileList.get(i) != null){
-//                    entityList.add(projectileList.get(i));
-//                }
-//            }
-//            for(int i = 0; i < particleList.size(); i++){
-//                if (particleList.get(i) != null){
-//                    entityList.add(particleList.get(i));
-//                }
-//            }
-//
-//            //SORT
-//            Collections.sort(entityList, new Comparator<Entity>() {
-//                @Override
-//                public int compare(Entity e1, Entity e2) {
-//                    int result = Integer.compare(e1.worldY, e2.worldY);
-//                    return result;
-//                }
-//            });
-//
-//
-//            //DRAW ENTITIES
-//            for(int i = 0; i < entityList.size(); i++){
-//                entityList.get(i).draw(g2);
-//            }
-//            //EMPTY ENTITY LIST
-//            entityList.clear();
-//
-//            //DRAW UI
-//            ui.draw(g2);
-//
-//
-//
-//            //DEBUG
-//            if(keyHandler.checkDrawTime == true){
-//                long drawEnd = System.nanoTime();
-//                long past = drawEnd - drawStart;
-//                g2.setColor(Color.cyan);
-//                g2.drawString("Draw time = " + past, 10, 400);
-//                System.out.println(past);
-//            }
-//        }
-//        g2.dispose(); // a good practice to save memory.
-//}
     public void playMusic(int i){
         music.setFile(i);
         music.play();
